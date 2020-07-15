@@ -35,7 +35,7 @@ namespace Lawyers_Web_App.DAL.Repositories
             return db.Documents.Where(predicate).ToList();
         }
 
-        public Document Get(int id)
+        public Document Get(int? id)
         {
             return db.Documents.FirstOrDefault(u => u.Id == id);
         }

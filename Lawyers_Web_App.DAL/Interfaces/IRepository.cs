@@ -11,7 +11,7 @@ namespace Lawyers_Web_App.DAL.Interfaces
         IEnumerable<T> GetAll();
 
         // получение
-        T Get(int id);
+        T Get(int? id);
 
         // поиск по критерию
         IEnumerable<T> Find(Func<T, Boolean> predicate);

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lawyers_Web_App.WEB", "Lawyers_Web_App.WEB\Lawyers_Web_App.WEB.csproj", "{C01BCA8A-9F45-4ABC-8353-965312A99DBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lawyers_Web_App.WEB", "Lawyers_Web_App.WEB\Lawyers_Web_App.WEB.csproj", "{C01BCA8A-9F45-4ABC-8353-965312A99DBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lawyers_Web_App.DAL", "Lawyers_Web_App.DAL\Lawyers_Web_App.DAL.csproj", "{FA4656EE-F675-4F41-99C1-7FAAFB22C11D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lawyers_Web_App.DAL", "Lawyers_Web_App.DAL\Lawyers_Web_App.DAL.csproj", "{FA4656EE-F675-4F41-99C1-7FAAFB22C11D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lawyers_Web_App.BLL", "Lawyers_Web_App.BLL\Lawyers_Web_App.BLL.csproj", "{646731B4-4413-4635-84B9-F4DCDD2DF6CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lawyers_Web_App.BLL", "Lawyers_Web_App.BLL\Lawyers_Web_App.BLL.csproj", "{646731B4-4413-4635-84B9-F4DCDD2DF6CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
