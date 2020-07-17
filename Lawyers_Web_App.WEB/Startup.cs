@@ -8,6 +8,11 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Lawyers_Web_App.BLL.Infrastructure;
+using Lawyers_Web_App.BLL.Interfaces;
+using Lawyers_Web_App.BLL.Services;
+using Lawyers_Web_App.DAL.EF;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lawyers_Web_App.WEB
 {
@@ -23,11 +28,16 @@ namespace Lawyers_Web_App.WEB
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
+            services.AddDbContext<LowyersContext>(c =>
+                c.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
+            services.AddInternalServices();
+            services.AddScoped<IDocumentService, DocumentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, LowyersContext dbContext)
         {
             if (env.IsDevelopment())
             {
@@ -39,6 +49,7 @@ namespace Lawyers_Web_App.WEB
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            LowyersContextSeed.SeedAsync(dbContext).Wait();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

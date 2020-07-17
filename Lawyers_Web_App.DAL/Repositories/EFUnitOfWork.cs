@@ -13,9 +13,9 @@ namespace Lawyers_Web_App.DAL.Repositories
         private UserRepository userRepository;
         private DocumentRepository documentRepository;
 
-        public EFUnitOfWork(string connectionString)
+        public EFUnitOfWork()
         {
-            db = new LowyersContext(connectionString);
+            db = new LowyersContext(LowyersContext.ops.dbOption);
         }
 
         public IRepository<User> Users

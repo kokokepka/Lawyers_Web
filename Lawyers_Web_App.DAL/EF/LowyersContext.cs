@@ -10,46 +10,39 @@ namespace Lawyers_Web_App.DAL.EF
     // Класс контекста данных
     public class LowyersContext:DbContext
     {
+        public class OptionsBuild
+        {
+            public OptionsBuild()
+            {
+                setting = new AppConfiguration();
+                opsBuilder = new DbContextOptionsBuilder<LowyersContext>();
+                opsBuilder.UseSqlServer(setting.sqlConnectionString);
+                dbOption = opsBuilder.Options;
+            }
+            public DbContextOptionsBuilder<LowyersContext> opsBuilder { get; set; }
+            public DbContextOptions<LowyersContext> dbOption { get; set; }
+            private AppConfiguration setting { get; set; }
+        }
+        public static OptionsBuild ops = new OptionsBuild();
+
+        public LowyersContext(DbContextOptions<LowyersContext> options) : base(options)
+        {
+            Database.EnsureCreated();
+        }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Document> Documents { get; set; }
 
-        private string connectionString;
-
-        public LowyersContext()
-        {
-            Database.EnsureCreated();
-            connectionString = "";
-        }
-
-        public LowyersContext(string connectionString)
-        {
-            Database.EnsureCreated();
-            this.connectionString = connectionString;
-        }
-
-        // инициализация базы данных начальными значениями
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=LawyersDb;Trusted_Connection=True;MultipleActiveResultSets=True");
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            User[] users = new User[]
-                {
-                    new User { Id=1, Name="User1", LastName = "Last1", Patronymic = "Patronymic1", Address = "Address1"},
-                    new User { Id=1, Name="User2", LastName = "Last2", Patronymic = "Patronymic1", Address = "Address1"},
-                    new User { Id=1, Name="User3", LastName = "Last3", Patronymic = "Patronymic1", Address = "Address1"}
-                };
-            modelBuilder.Entity<User>().HasData(users);
-
-            modelBuilder.Entity<Document>().HasData(
-                new Document[]
-                {
-                    new Document { Id=1, Name="Doc1", Path = "//", User = users[0], Date = DateTime.Now.Date },
-                    new Document { Id=1, Name="Doc2", Path = "//", User = users[1], Date = DateTime.Now.Date },
-                    new Document { Id=1, Name="Doc3", Path = "//", User = users[2], Date = DateTime.Now.Date }
-                });
-        }
+        
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    //modelBuilder.Entity<User>().HasKey(u => u.Id);
+        //    //modelBuilder.Entity<User>().HasMany(u => u.Documents).WithOne(e => e.User).HasForeignKey(u => u.UserId).IsRequired();
+        //    //modelBuilder.Entity<Document>().HasKey(d=>d.Id);
+        //    //modelBuilder.Entity<Document>().HasOne(u => u.User).WithMany(u => u.Documents).HasForeignKey(d => d.UserId).IsRequired();
+        //    //modelBuilder.Entity<Document>()
+        //    //               .Property(e => e.Id)
+        //    //               .ValueGeneratedOnAdd();  
+        //}
     }
 }
