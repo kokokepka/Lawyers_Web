@@ -8,36 +8,22 @@ using Microsoft.Extensions.Logging;
 using Lawyers_Web_App.WEB.Models;
 using Lawyers_Web_App.BLL.Interfaces;
 using Lawyers_Web_App.BLL.DTO;
+using Lawyers_Web_App.WEB.Models.Account;
+using Lawyers_Web_App.BLL.Infrastructure;
 
 namespace Lawyers_Web_App.WEB.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private IDocumentService _docService;
-
-        public HomeController(ILogger<HomeController> logger, IDocumentService documentService)
+        public HomeController(ILogger<HomeController> logger, IAccountService accountService)
         {
             _logger = logger;
-            _docService = documentService;
         }
 
         public IActionResult Index()
-        {
-            IEnumerable<DocumentDTO> docDtos = _docService.GetDocs();
-            IList<DocumentViewModels> documentViews = new List<DocumentViewModels>();
-            foreach(var item in docDtos)
-            {
-                documentViews.Add(new DocumentViewModels
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Path = item.Path,
-                    UserId = item.UserId,
-                    Date = item.Date
-                });
-            }
-            return View(documentViews);
+        {           
+            return View();
         }
 
         public IActionResult Privacy()

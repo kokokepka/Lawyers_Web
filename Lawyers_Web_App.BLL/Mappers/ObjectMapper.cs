@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using AutoMapper;
 using Lawyers_Web_App.BLL.DTO;
+using Lawyers_Web_App.BLL.DTO.DocDTO;
 using Lawyers_Web_App.DAL.Entities;
+using Lawyers_Web_App.DAL.Entities.Documents;
 
 namespace Lawyers_Web_App.BLL.Mappers
 {
@@ -28,7 +30,8 @@ namespace Lawyers_Web_App.BLL.Mappers
             public DtoMapper()
             {
                 CreateMap<User, UserDTO>().ReverseMap();
-                CreateMap<Document, DocumentDTO>().ReverseMap();         
+                CreateMap<UserDocument, UserDocDTO>().ReverseMap();
+                CreateMap<ClientDocument, ClientDocDTO>().ReverseMap();
             }
         }
     }

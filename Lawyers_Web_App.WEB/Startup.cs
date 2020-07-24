@@ -13,6 +13,7 @@ using Lawyers_Web_App.BLL.Interfaces;
 using Lawyers_Web_App.BLL.Services;
 using Lawyers_Web_App.DAL.EF;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Lawyers_Web_App.WEB
 {
@@ -29,11 +30,14 @@ namespace Lawyers_Web_App.WEB
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddDbContext<LowyersContext>(c =>
-                c.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
-            services.AddInternalServices();
-            services.AddScoped<IDocumentService, DocumentService>();
+            services.AddInternalServices(Configuration);
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => //CookieAuthenticationOptions
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,14 +53,14 @@ namespace Lawyers_Web_App.WEB
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            LowyersContextSeed.SeedAsync(dbContext).Wait();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

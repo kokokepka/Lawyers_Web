@@ -1,20 +1,20 @@
-﻿@model IEnumerable<Lawyers_Web_App.WEB.Models.DocumentViewModels>
-
-
+﻿
 <h2>Index</h2>
-
-<table class="table">
-
-    @foreach (var item in Model)
+@if (User.Identity.IsAuthenticated)
+{
+    <h1>Всё чики пуки</h1>
+    <p> <a asp-action="Logoff" asp-controller="Account">Зарегестрироваться</a>. </p>
+}
+else
+{
+    if (User.IsInRole("main-lawyer"))
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Path)
-            </td>
-          
-        </tr>
+        <p> <a asp-action="Register" asp-controller="Account">Зарегестрироваться</a>. </p>
     }
-</table>
+    else
+    {
+        <p>Рекомендуем Вам <a asp-action="Login" asp-controller="Account">авторизоваться</a>. </p>
+    }
+}
+
+

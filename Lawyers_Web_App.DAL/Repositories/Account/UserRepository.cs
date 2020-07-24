@@ -32,17 +32,17 @@ namespace Lawyers_Web_App.DAL.Repositories
 
         public IEnumerable<User> Find(Func<User, bool> predicate)
         {
-            return db.Users.Where(predicate).ToList();
+            return db.Users.Include(u => u.Role).Include(u => u.Documents).Where(predicate).ToList();
         }
 
         public User Get(int? id)
         {
-            return db.Users.FirstOrDefault(u => u.Id == id);
+            return db.Users.Include(u => u.Role).Include(u=>u.Documents).FirstOrDefault(u => u.Id == id);
         }
 
         public IEnumerable<User> GetAll()
         {
-            return db.Users;
+            return db.Users.Include(u => u.Role).Include(u => u.Documents);
         }
 
         public void Update(User item)

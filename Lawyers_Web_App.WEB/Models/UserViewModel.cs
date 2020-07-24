@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Lawyers_Web_App.BLL.DTO
+namespace Lawyers_Web_App.WEB.Models
 {
-    public class UserDTO
+    public class UserViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

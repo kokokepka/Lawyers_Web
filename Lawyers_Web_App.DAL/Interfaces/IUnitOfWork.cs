@@ -1,4 +1,6 @@
 ﻿using Lawyers_Web_App.DAL.Entities;
+using Lawyers_Web_App.DAL.Entities.Documents;
+using Lawyers_Web_App.DAL.Entities.UserEntities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +11,10 @@ namespace Lawyers_Web_App.DAL.Interfaces
     public interface IUnitOfWork : IDisposable
     {
         IRepository<User> Users { get; }
-        IRepository<Document> Documents { get; }
+        IRepository<ClientProfile> ClientProfiles { get; }
+        IRepository<Role> Roles { get; }
+        IRepository<UserDocument> UserDocuments { get; }
+        IRepository<ClientDocument> ClientDocuments { get; }
         void Save();
     }
 }

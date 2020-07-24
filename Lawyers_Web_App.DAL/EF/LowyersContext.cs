@@ -1,4 +1,6 @@
 ﻿using Lawyers_Web_App.DAL.Entities;
+using Lawyers_Web_App.DAL.Entities.Documents;
+using Lawyers_Web_App.DAL.Entities.UserEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
@@ -31,18 +33,25 @@ namespace Lawyers_Web_App.DAL.EF
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Document> Documents { get; set; }
+        public DbSet<ClientProfile> ClientProfiles { get; set; }
+        public DbSet<Role> Roles { get; set; } 
+        public DbSet<UserDocument> UserDocuments { get; set; }
+        public DbSet<ClientDocument> ClientDocuments { get; set; }
 
-        
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    //modelBuilder.Entity<User>().HasKey(u => u.Id);
-        //    //modelBuilder.Entity<User>().HasMany(u => u.Documents).WithOne(e => e.User).HasForeignKey(u => u.UserId).IsRequired();
-        //    //modelBuilder.Entity<Document>().HasKey(d=>d.Id);
-        //    //modelBuilder.Entity<Document>().HasOne(u => u.User).WithMany(u => u.Documents).HasForeignKey(d => d.UserId).IsRequired();
-        //    //modelBuilder.Entity<Document>()
-        //    //               .Property(e => e.Id)
-        //    //               .ValueGeneratedOnAdd();  
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>().HasOne(u => u.Role).WithMany(r => r.Users).OnDelete(DeleteBehavior.SetNull);
+            modelBuilder.Entity<UserDocument>().HasOne(u => u.User).WithMany(d => d.Documents).OnDelete(DeleteBehavior.SetNull);
+            modelBuilder.Entity<ClientDocument>().HasOne(c => c.Client).WithMany(d => d.Documents).OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Role>().HasData(new Role[]
+            {
+                new Role(){Id = 1, Name= "Заведующий", Design = "main-lawyer"},
+                new Role(){Id = 2, Name = "Адвокат", Design = "lawyer"}
+            });
+        }
+
     }
 }
