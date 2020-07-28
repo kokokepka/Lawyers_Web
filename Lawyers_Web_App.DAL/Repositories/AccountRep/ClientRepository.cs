@@ -30,17 +30,17 @@ namespace Lawyers_Web_App.DAL.Repositories
 
         public IEnumerable<ClientProfile> Find(Func<ClientProfile, bool> predicate)
         {
-            return db.ClientProfiles.Include(c=>c.Documents).Where(predicate).ToList();
+            return db.ClientProfiles.Include(c=>c.Case).Where(predicate).ToList();
         }
 
         public ClientProfile Get(int? id)
         {
-            return db.ClientProfiles.Include(u => u.Documents).FirstOrDefault(u => u.Id == id);
+            return db.ClientProfiles.Include(c => c.Case).FirstOrDefault(u => u.Id == id);
         }
 
         public IEnumerable<ClientProfile> GetAll()
         {
-            return db.ClientProfiles.Include(u => u.Documents);
+            return db.ClientProfiles.Include(c => c.Case);
         }
 
         public void Update(ClientProfile item)

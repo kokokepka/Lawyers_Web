@@ -2,19 +2,19 @@
 <h2>Index</h2>
 @if (User.Identity.IsAuthenticated)
 {
-    <h1>Всё чики пуки</h1>
-    <p> <a asp-action="Logoff" asp-controller="Account">Зарегестрироваться</a>. </p>
-}
-else
-{
     if (User.IsInRole("main-lawyer"))
     {
         <p> <a asp-action="Register" asp-controller="Account">Зарегестрироваться</a>. </p>
     }
-    else
-    {
-        <p>Рекомендуем Вам <a asp-action="Login" asp-controller="Account">авторизоваться</a>. </p>
-    }
+    <h1>Всё чики пуки</h1>
+    <p> <a asp-action="Logoff" asp-controller="Account">Зарегестрироваться</a>. </p>
+}
+
+else
+{
+    <p>Рекомендуем Вам <a asp-action="Login" asp-controller="Account">авторизоваться</a>. </p>
+    <p>Рекомендуем Вам <a asp-action="RegisterClient" asp-controller="Account">авторизовать</a>. </p>
+    <p>Рекомендуем Вам <a asp-action="AddClientFile" asp-controller="Document">загрузить</a>. </p>
 }
 
 

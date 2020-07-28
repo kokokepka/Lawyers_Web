@@ -3,6 +3,7 @@ using Lawyers_Web_App.BLL.DTO.AccountDTO;
 using Lawyers_Web_App.BLL.Infrastructure;
 using Lawyers_Web_App.BLL.Interfaces;
 using Lawyers_Web_App.DAL.Entities;
+using Lawyers_Web_App.DAL.Entities.UserEntities;
 using Lawyers_Web_App.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -65,6 +66,29 @@ namespace Lawyers_Web_App.BLL.Services
             else
             {
                 throw new ValidationException("Пользователь с таким логином уже зарегистрирован!", "");
+            }
+        }
+
+        public void RegisterClient(ClientDTO clientDTO)
+        {
+            ClientProfile client = _database.ClientProfiles.Find(c => c.Name == clientDTO.Name &&
+            c.Surname == clientDTO.Surname && c.Patronymic == clientDTO.Patronymic && c.DateOfBirth == clientDTO.DateOfBirth).FirstOrDefault();
+            if (client == null)
+            {
+                _database.ClientProfiles.Create(new ClientProfile
+                {
+                    Name = clientDTO.Name,
+                    Surname = clientDTO.Surname,
+                    Patronymic = clientDTO.Patronymic,
+                    DateOfBirth = clientDTO.DateOfBirth,
+                    Phone = clientDTO.Phone,
+                    Email = clientDTO.Email
+                });
+                _database.Save();
+            }
+            else
+            {
+                throw new ValidationException("Клиент уже зарегистрирован!", "");
             }
         }
     }

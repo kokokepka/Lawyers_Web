@@ -33,14 +33,14 @@ namespace Lawyers_Web_App.WEB.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register()
+        public IActionResult RegisterUser()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Register(RegisterViewModel model)
+        public IActionResult RegisterUser(RegisterUserViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -98,6 +98,38 @@ namespace Lawyers_Web_App.WEB.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        public IActionResult RegisterClient()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult RegisterClient(RegisterClientViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _accountService.RegisterClient(new ClientDTO
+                    {
+                        Name = model.Name,
+                        Surname = model.Surname,
+                        Patronymic = model.Patronymic,
+                        DateOfBirth = model.DateOfBirth,
+                        Email = model.Email,
+                        Phone = model.Phone
+                    });
+                    return RedirectToAction("Index", "Home");
+                }
+                catch(ValidationException ex)
+                {
+                    ModelState.AddModelError(ex.Property, ex.Message);
+                }
+            }
+            return View(model);
+        }
+
         private async Task Authenticate(string userLogin, string userRole)
         {
             var claims = new List<Claim>
@@ -107,6 +139,12 @@ namespace Lawyers_Web_App.WEB.Controllers
             };
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+        }
+
+        [HttpGet]
+        public IActionResult PrivateOffice()
+        {
+            return View();
         }
     }
 }

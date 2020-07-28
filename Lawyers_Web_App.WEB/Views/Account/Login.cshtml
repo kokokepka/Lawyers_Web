@@ -1,35 +1,45 @@
 ﻿@model Lawyers_Web_App.WEB.Models.Account.LoginViewModel
-
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Вход";
 }
 
-<h1>Login</h1>
-
-<h4>LoginViewModel</h4>
+<h1>Вход</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Login">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Login" class="control-label"></label>
-                <input asp-for="Login" class="form-control" />
-                <span asp-validation-for="Login" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Войти" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container" style="background-color:whitesmoke">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <form asp-action="Login">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Login" class="control-label"></label>
+                    <input asp-for="Login" class="form-control" />
+                    <span asp-validation-for="Login" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input type="submit" value="Войти" class="btn btn-info btn-dark" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div>
+                            <a class="btn btn-danger" asp-controller="Home" asp-action="Index">Назад</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3"></div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 

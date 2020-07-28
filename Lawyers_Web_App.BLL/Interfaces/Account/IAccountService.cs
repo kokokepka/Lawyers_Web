@@ -10,6 +10,7 @@ namespace Lawyers_Web_App.BLL.Interfaces
     {
         AccountDTO Login(string login, string password);
         void Register(UserDTO userDTO);
+        void RegisterClient(ClientDTO clientDTO);
         void Dispose();
     }
 }

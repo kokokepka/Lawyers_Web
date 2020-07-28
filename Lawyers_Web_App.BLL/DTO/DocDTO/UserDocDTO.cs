@@ -10,6 +10,6 @@ namespace Lawyers_Web_App.BLL.DTO
         public string Name { get; set; }
         public string Path { get; set; }
         public int? UserId { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
     }
 }

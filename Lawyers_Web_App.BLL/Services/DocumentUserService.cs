@@ -1,6 +1,8 @@
 ﻿using Lawyers_Web_App.BLL.DTO;
+using Lawyers_Web_App.BLL.DTO.DocDTO;
 using Lawyers_Web_App.BLL.Infrastructure;
 using Lawyers_Web_App.BLL.Interfaces;
+using Lawyers_Web_App.BLL.Interfaces.Documents;
 using Lawyers_Web_App.BLL.Mappers;
 using Lawyers_Web_App.DAL.Entities;
 using Lawyers_Web_App.DAL.Entities.Documents;
@@ -11,7 +13,7 @@ using System.Text;
 
 namespace Lawyers_Web_App.BLL.Services
 {
-    public class DocumentUserService : IUserDocumentService
+    public class DocumentUserService : IDocService<UserDocDTO, UserDTO>
     {
         IUnitOfWork _database { get; set; }
 
@@ -27,10 +29,10 @@ namespace Lawyers_Web_App.BLL.Services
         public UserDocDTO GetDoc(int? id)
         {
             if(id == null)
-                throw new ValidationException("Id пользователя не найдено", "");
+                throw new ValidationException("Id документа не найдено", "");
             var doc = _database.UserDocuments.Get(id);
             if (doc == null)
-                throw new ValidationException("Пользователь не найден", "");
+                throw new ValidationException("Документ не найден", "");
 
             return new UserDocDTO { Id = doc.Id, Name = doc.Name, Path = doc.Path, Date = doc.Date, UserId = doc.UserId };
         }
@@ -58,7 +60,7 @@ namespace Lawyers_Web_App.BLL.Services
             return mapped;
         }
 
-        public IEnumerable<UserDocDTO> GetUserDocs(UserDTO userDto)
+        public IEnumerable<UserDocDTO> GetDocs(UserDTO userDto)
         {
             var docs = _database.UserDocuments.Find(d => d.UserId == userDto.Id);
             var mapped = ObjectMapper.Mapper.Map<IEnumerable<UserDocDTO>>(docs);

@@ -20,10 +20,9 @@ namespace Lawyers_Web_App.WEB.Models.Account
         [Display(Name = "Отчество")]
         public string Patronymic { get; set; }
 
-        [Required(ErrorMessage = "Введите дату рождения")]
         [Display(Name = "Дата рождения")]
         [DataType(DataType.Date)]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         [Required(ErrorMessage = "Введите номер телефона")]
         [Display(Name = "Телефон")]

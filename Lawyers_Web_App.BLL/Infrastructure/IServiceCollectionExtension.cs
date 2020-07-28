@@ -9,6 +9,11 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Lawyers_Web_App.BLL.Interfaces;
 using Lawyers_Web_App.BLL.Services;
+using Lawyers_Web_App.BLL.Interfaces.Documents;
+using Lawyers_Web_App.BLL.DTO.DocDTO;
+using Lawyers_Web_App.BLL.DTO;
+using Lawyers_Web_App.BLL.Interfaces.Other;
+using Lawyers_Web_App.BLL.DTO.OtherDTO;
 
 namespace Lawyers_Web_App.BLL.Infrastructure
 {
@@ -18,8 +23,12 @@ namespace Lawyers_Web_App.BLL.Infrastructure
         {            
             services.AddDbContext<LowyersContext>(c =>
                 c.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IUserDocumentService, DocumentUserService>();
+            //services.AddScoped<IUserDocumentService, DocumentUserService>();         
+            services.AddScoped<IDocService<UserDocDTO, UserDTO>, DocumentUserService>();
+            services.AddScoped<IDocService<CaseDocDTO, CaseDTO>, DocumentCaseService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<INoteService, NoteService>();
+            services.AddScoped<ICaseService, CaseService>();
             services.AddScoped<IUnitOfWork, EFUnitOfWork>();
             return services;
         }

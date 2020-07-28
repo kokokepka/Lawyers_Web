@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lawyers_Web_App.WEB.Models.Account
 {
-    public class RegisterViewModel
+    public class RegisterUserViewModel
     {
         [Required(ErrorMessage ="Укажите логин")]
         [Display(Name ="Логин")]

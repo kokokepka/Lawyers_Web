@@ -1,9 +1,11 @@
 ﻿using Lawyers_Web_App.DAL.EF;
 using Lawyers_Web_App.DAL.Entities;
 using Lawyers_Web_App.DAL.Entities.Documents;
+using Lawyers_Web_App.DAL.Entities.Other;
 using Lawyers_Web_App.DAL.Entities.UserEntities;
 using Lawyers_Web_App.DAL.Interfaces;
 using Lawyers_Web_App.DAL.Repositories.Document;
+using Lawyers_Web_App.DAL.Repositories.OtherRep;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,6 +20,8 @@ namespace Lawyers_Web_App.DAL.Repositories
         private RoleRepository _roleRepository;
         private UserDocumentRepository _userDocumentRepository;
         private ClientDocumentRepository _clientDocumentRepository;
+        private NoteRepositity _noteRepositity;
+        private CaseRepository _caseRepositoty;
         public EFUnitOfWork()
         {
             db = new LowyersContext(LowyersContext.ops.dbOption);
@@ -28,6 +32,9 @@ namespace Lawyers_Web_App.DAL.Repositories
         public IRepository<ClientProfile> ClientProfiles => _clientProfileRepository ?? new ClientRepository(db);
         public IRepository<UserDocument> UserDocuments => _userDocumentRepository ?? new UserDocumentRepository(db);
         public IRepository<ClientDocument> ClientDocuments => _clientDocumentRepository ?? new ClientDocumentRepository(db);
+        public IRepository<Note> Notes => _noteRepositity ?? new NoteRepositity(db);
+
+        public IRepository<Case> Cases => _caseRepositoty ?? new CaseRepository(db);
 
         private bool disposed = false;
 

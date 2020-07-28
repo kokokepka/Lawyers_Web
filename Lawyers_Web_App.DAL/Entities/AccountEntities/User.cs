@@ -1,4 +1,5 @@
 ﻿using Lawyers_Web_App.DAL.Entities.Documents;
+using Lawyers_Web_App.DAL.Entities.Other;
 using Lawyers_Web_App.DAL.Entities.UserEntities;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,7 @@ namespace Lawyers_Web_App.DAL.Entities
         public int? RoleId { get; set; }
         public Role Role { get; set; }
         public virtual IList<UserDocument> Documents { get; set; }
+        public virtual IList<Note> Notes { get; set; }
+        public virtual IList<Case> Cases { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Lawyers_Web_App.DAL.Entities;
 using Lawyers_Web_App.DAL.Entities.Documents;
+using Lawyers_Web_App.DAL.Entities.Other;
 using Lawyers_Web_App.DAL.Entities.UserEntities;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace Lawyers_Web_App.DAL.Interfaces
         IRepository<Role> Roles { get; }
         IRepository<UserDocument> UserDocuments { get; }
         IRepository<ClientDocument> ClientDocuments { get; }
+        IRepository<Note> Notes { get; }
+        IRepository<Case> Cases { get; }
         void Save();
     }
 }

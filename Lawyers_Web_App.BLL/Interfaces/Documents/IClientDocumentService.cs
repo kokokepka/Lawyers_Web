@@ -8,10 +8,10 @@ namespace Lawyers_Web_App.BLL.Interfaces
 {
     public interface IClientDocumentService
     {
-        void MakeDoc(ClientDocDTO clientDocDto);
-        ClientDocDTO GetDoc(int? id);
-        IEnumerable<ClientDocDTO> GetAllDocs();
-        IEnumerable<ClientDocDTO> GetUserDocs(ClientDTO clientDto);
-        void Dispose();
+        //void MakeDoc(ClientDocDTO clientDocDto);
+        //ClientDocDTO GetDoc(int? id);
+        //IEnumerable<ClientDocDTO> GetAllDocs();
+        //IEnumerable<ClientDocDTO> GetUserDocs(ClientDTO clientDto);
+        //void Dispose();
     }
 }
