@@ -5,13 +5,14 @@ using Lawyers_Web_App.BLL.Interfaces;
 using Lawyers_Web_App.BLL.Interfaces.Documents;
 using Lawyers_Web_App.BLL.Mappers;
 using Lawyers_Web_App.DAL.Entities;
+using Lawyers_Web_App.DAL.Entities.AccountEntities;
 using Lawyers_Web_App.DAL.Entities.Documents;
 using Lawyers_Web_App.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lawyers_Web_App.BLL.Services
+namespace Lawyers_Web_App.BLL.Services.Documents
 {
     public class DocumentUserService : IDocService<UserDocDTO, UserDTO>
     {

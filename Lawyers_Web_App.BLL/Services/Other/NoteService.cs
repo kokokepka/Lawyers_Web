@@ -4,6 +4,7 @@ using Lawyers_Web_App.BLL.Infrastructure;
 using Lawyers_Web_App.BLL.Interfaces.Other;
 using Lawyers_Web_App.BLL.Mappers;
 using Lawyers_Web_App.DAL.Entities;
+using Lawyers_Web_App.DAL.Entities.AccountEntities;
 using Lawyers_Web_App.DAL.Entities.UserEntities;
 using Lawyers_Web_App.DAL.Interfaces;
 using System;

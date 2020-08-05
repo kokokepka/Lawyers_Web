@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lawyers_Web_App.DAL.Entities.AccountEntities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 

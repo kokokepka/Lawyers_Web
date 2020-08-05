@@ -1,17 +1,17 @@
-﻿using Lawyers_Web_App.DAL.Entities.Documents;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Lawyers_Web_App.BLL.DTO.OtherDTO
+namespace Lawyers_Web_App.WEB.Models
 {
-    public class CaseDTO
+    public class CaseViewModel
     {
         public int Id { get; set; }
         public string Title { get; set; }
         public bool IsOpen { get; set; }
         public int? ClientId { get; set; }
         public int? UserId { get; set; }
-        public virtual IList<ClientDocument> Documents { get; set; }
+        public string TypeOfCase { get; set; }
     }
 }

@@ -14,6 +14,8 @@ using Lawyers_Web_App.BLL.Services;
 using Lawyers_Web_App.DAL.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using AutoMapper;
+using Lawyers_Web_App.WEB.Mapping;
 
 namespace Lawyers_Web_App.WEB
 {
@@ -29,6 +31,15 @@ namespace Lawyers_Web_App.WEB
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Auto Mapper Configurations
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
             services.AddMvc();
             services.AddControllersWithViews();
             services.AddInternalServices(Configuration);

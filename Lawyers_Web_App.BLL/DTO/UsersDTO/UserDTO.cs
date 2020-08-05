@@ -8,6 +8,7 @@ namespace Lawyers_Web_App.BLL.DTO
     {
         public string Login { get; set; }
         public string Password { get; set; }
+        public byte[] Avatar { get; set; }
 
     }
 }

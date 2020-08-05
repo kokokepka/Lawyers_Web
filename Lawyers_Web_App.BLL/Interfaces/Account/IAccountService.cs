@@ -11,6 +11,8 @@ namespace Lawyers_Web_App.BLL.Interfaces
         AccountDTO Login(string login, string password);
         void Register(UserDTO userDTO);
         void RegisterClient(ClientDTO clientDTO);
+        UserDTO GetUser(string login);
+        void AddUserPhoto(UserDTO userDTO);
         void Dispose();
     }
 }

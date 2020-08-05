@@ -11,7 +11,7 @@ namespace Lawyers_Web_App.WEB.Models
     {
         public string Name { get; set; }
         public string Path { get; set; }
-        public int? UserId { get; set; }
+        public int? SomeoneId { get; set; }
         public IFormFile UploadedFile { get; set; }
         public DateTime? Date { get; set; }
     }

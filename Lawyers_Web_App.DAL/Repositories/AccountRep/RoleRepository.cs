@@ -1,5 +1,6 @@
 ﻿using Lawyers_Web_App.DAL.EF;
 using Lawyers_Web_App.DAL.Entities;
+using Lawyers_Web_App.DAL.Entities.AccountEntities;
 using Lawyers_Web_App.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Lawyers_Web_App.DAL.Repositories
+namespace Lawyers_Web_App.DAL.Repositories.AccountRep
 {
     public class RoleRepository : IRepository<Role>
     {

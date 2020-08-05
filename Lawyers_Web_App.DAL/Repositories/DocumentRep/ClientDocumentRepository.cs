@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Lawyers_Web_App.DAL.Repositories.Document
+namespace Lawyers_Web_App.DAL.Repositories.DocumentRep
 {
     public class ClientDocumentRepository : IRepository<ClientDocument>
     {

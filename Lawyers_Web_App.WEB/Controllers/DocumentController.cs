@@ -54,7 +54,7 @@ namespace Lawyers_Web_App.WEB.Controllers
                         await model.UploadedFile.CopyToAsync(fileStream);
                     }
                     _clientDocumentService.MakeDoc(new CaseDocDTO { Name = model.UploadedFile.FileName, Path = path,
-                        Date = DateTime.Now.Date, CaseId = model.UserId});
+                        Date = DateTime.Now.Date, CaseId = model.SomeoneId});
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -86,7 +86,7 @@ namespace Lawyers_Web_App.WEB.Controllers
                         Name = model.UploadedFile.FileName,
                         Path = path,
                         Date = DateTime.Now.Date,
-                        UserId = model.UserId
+                        UserId = model.SomeoneId
                     });
                     return RedirectToAction("Index", "Home");
                 }

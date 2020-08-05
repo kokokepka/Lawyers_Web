@@ -1,12 +1,14 @@
 ﻿using Lawyers_Web_App.DAL.Entities;
 using Lawyers_Web_App.DAL.Entities.Documents;
-using Lawyers_Web_App.DAL.Entities.Other;
+using Lawyers_Web_App.DAL.Entities.Cases;
 using Lawyers_Web_App.DAL.Entities.UserEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Lawyers_Web_App.DAL.Entities.AccountEntities;
+using Lawyers_Web_App.DAL.Entities.Cases.Additionally;
 
 namespace Lawyers_Web_App.DAL.EF
 {
@@ -34,13 +36,15 @@ namespace Lawyers_Web_App.DAL.EF
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<ClientProfile> ClientProfiles { get; set; }
+        public DbSet<CaseUser> CaseUsers { get; set; }
+        public DbSet<Client> Clients { get; set; }
         public DbSet<Role> Roles { get; set; } 
         public DbSet<UserDocument> UserDocuments { get; set; }
         public DbSet<ClientDocument> ClientDocuments { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<Case> Cases { get; set; }
-
+        public DbSet<Category> Categories { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -54,8 +58,17 @@ namespace Lawyers_Web_App.DAL.EF
                 .HasForeignKey(u=>u.CaseId).OnDelete(DeleteBehavior.SetNull);
             modelBuilder.Entity<Note>().HasOne(s => s.User).WithMany(u => u.Notes)
                 .HasForeignKey(n=>n.UserId).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<ClientProfile>().HasOne(c => c.Case).WithOne(c => c.Client)
-                .HasForeignKey<Case>(c=>c.ClientId).OnDelete(DeleteBehavior.SetNull); ;
+
+
+            modelBuilder.Entity<Client>().HasOne(c => c.Case).WithOne(c => c.Client)
+                .HasForeignKey<Case>(c=>c.ClientId).OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<CaseUser>().HasOne(c=>c.Case).WithMany(c=>c.Participants)
+                .HasForeignKey(c=>c.CaseId).OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Category>().HasMany(c=>c.Сases).WithOne(c=>c.Category).HasForeignKey(c=>c.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
             Role[] roles = new Role[]
             {
@@ -71,8 +84,8 @@ namespace Lawyers_Web_App.DAL.EF
                     Id = 1,
                     Login="asada",
                     Password = "77BF1AD4AA4741B8C9D35443FF8AFEAC",
-                    Name = "Асадчая",
-                    Surname = "Светлана",
+                    Name = "Светлана",
+                    Surname = "Асадчая",
                     Patronymic = "Яковлевна",
                     DateOfBirth = DateTime.Parse("29.08.1969"),
                     Email = "asadchaya.a.s@gmail.com",
@@ -85,8 +98,8 @@ namespace Lawyers_Web_App.DAL.EF
                     Id = 2,
                     Login="law",
                     Password = "52CF164593824035FBB66861577A0C32",
-                    Name = "Пивнова",
-                    Surname = "Елена",
+                    Name = "Елена",
+                    Surname = "Пивнова",
                     Patronymic = "Михайловна",
                     DateOfBirth = DateTime.Parse("09.04.1975"),
                     Email = "pivaaa@gmail.com",
@@ -97,7 +110,7 @@ namespace Lawyers_Web_App.DAL.EF
 
             modelBuilder.Entity<User>().HasData(users);
 
-            ClientProfile client = new ClientProfile()
+            CaseUser client = new CaseUser()
             {
                 Id = 1,
                 Name = "Пупкин",
@@ -107,19 +120,22 @@ namespace Lawyers_Web_App.DAL.EF
                 Email = "pup@gmail.com",
                 Phone = "+375(44)695-25-44"
             };
-            modelBuilder.Entity<ClientProfile>().HasData(client);
+            modelBuilder.Entity<CaseUser>().HasData(client);
 
-            modelBuilder.Entity<Case>().HasData(new Case[]
-            {
-                new Case
-                {
-                    Id = 1,
-                    Title = "Дело № 1",
-                    IsOpen = true,
-                    ClientId = 1,
-                    UserId = 1
-                }
-            });
+            //modelBuilder.Entity<AdministrativeСase>().HasData(new AdministrativeСase[]
+            //{
+            //    new AdministrativeСase
+            //    {
+            //        Id = 1,
+            //        Title = "Дело № 1",
+            //        IsOpen = true,
+            //        ClientId = 1,
+            //        UserId = 1,
+            //        Date = DateTime.Now,
+            //        Article = "Статья № 1",
+            //        Instance = Instance.First
+            //    }
+            //});
         }
     }
 }

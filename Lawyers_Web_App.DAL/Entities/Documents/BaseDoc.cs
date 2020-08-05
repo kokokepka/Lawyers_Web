@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Lawyers_Web_App.DAL.Entities
+namespace Lawyers_Web_App.DAL.Entities.Documents
 {
     // Модель документов, объект которой будет храниться в бд
     public class BaseDoc

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Lawyers_Web_App.DAL.Entities.UserEntities
+namespace Lawyers_Web_App.DAL.Entities.AccountEntities
 {
     public class BaseUser
     {
@@ -14,6 +14,6 @@ namespace Lawyers_Web_App.DAL.Entities.UserEntities
         public string Patronymic { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string Phone { get; set; }
-        public string? Email { get; set; }
+        public string Email { get; set; }
     }
 }

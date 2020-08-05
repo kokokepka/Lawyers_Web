@@ -14,6 +14,10 @@ using Lawyers_Web_App.BLL.DTO.DocDTO;
 using Lawyers_Web_App.BLL.DTO;
 using Lawyers_Web_App.BLL.Interfaces.Other;
 using Lawyers_Web_App.BLL.DTO.OtherDTO;
+using Lawyers_Web_App.BLL.Services.Documents;
+using Lawyers_Web_App.BLL.DTO.CasesDTO;
+using Lawyers_Web_App.BLL.Interfaces.Cases;
+using Lawyers_Web_App.BLL.Services.Cases;
 
 namespace Lawyers_Web_App.BLL.Infrastructure
 {

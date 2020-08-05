@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Lawyers_Web_App.WEB.Models.CaseViewModel>
+@foreach (var item in Model)
+{
+    @*<div class="row">
+        <div class="col-md-12">
+            <table class="table table-secondary table-hover">
+                <thead>
+                    <tr>
+                        <th>№ Дела</th>
+                        <th>Название</th>
+                        <th>Бренд</th>
+                        <th>Номер</th>
+                        <th>Цена</th>
+                        <th>Поставщик</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Заказ № @item.OrderId</td>
+                        <td>@item.NameClient</td>
+                        <td>@item.NumberPhone</td>
+                        <td>@item.Email</td>
+                        <td>@item.AllPrice рублей</td>
+                        <td>
+                            <button class="btn btn-dark" id="@item.OrderId">Расскрыть</button>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" asp-area="" asp-controller="Home" asp-action="DelOrder" asp-route-id="@item.OrderId">Удалить</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>*@
+}
+
+

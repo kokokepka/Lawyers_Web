@@ -14,18 +14,22 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
+using System.IO;
 
 namespace Lawyers_Web_App.WEB.Controllers
 {
     public class AccountController : Controller
     {
-        private IAccountService _accountService;
+        private readonly IAccountService _accountService;
         private readonly ILogger<AccountController> _logger;
+        private readonly IMapper _mapper;
 
-        public AccountController(ILogger<AccountController> logger, IAccountService accountService)
+        public AccountController(ILogger<AccountController> logger, IAccountService accountService, IMapper mapper)
         {
             _logger = logger;
             _accountService = accountService;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -142,9 +146,57 @@ namespace Lawyers_Web_App.WEB.Controllers
         }
 
         [HttpGet]
+        public IActionResult AddPhoto()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        public IActionResult AddPhoto(UserViewModel userView)
+        {
+            //try
+            //{
+            //    if (userView.Avatar != null)
+            //    {
+            //        byte[] imageData;
+            //        using (var binaryReader = new BinaryReader(userView.Avatar.OpenReadStream()))
+            //        {
+            //            imageData = binaryReader.ReadBytes((int)userView.Avatar.Length);
+            //        }
+            //        _accountService.AddUserPhoto(new UserDTO { Id = userView.Id, Avatar = imageData });
+            //        return RedirectToAction("PrivateOffice", "Account");
+            //    }
+            //    else
+            //    {
+            //        return View();
+            //    }
+            //}
+            //catch(ValidationException ex)
+            //{
+            //    ModelState.AddModelError(ex.Property, ex.Message);
+            //}
+            return View();
+        } 
+
+        [HttpGet]
         public IActionResult PrivateOffice()
         {
-            return View();
+            try
+            {
+                string login = User.Identity.Name;
+                if(login != null)
+                {
+                    UserDTO user = _accountService.GetUser(login);
+                    var model = _mapper.Map<UserViewModel>(user);
+                    return View(model);
+                }
+               
+            }
+            catch(ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

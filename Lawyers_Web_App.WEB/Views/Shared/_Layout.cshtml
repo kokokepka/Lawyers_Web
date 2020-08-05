@@ -6,16 +6,22 @@
     <title>@ViewData["Title"] - Гомельская городская коллегия адвокатов</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/office.css" />
     <link href="https://fonts.googleapis.com/css2?family=Pattaya&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark box-shadow mb-3 text-uppercase font-weight-bold">
-            <div class="container">
-                <a class="navbar-brand font-weight-bold text-light" style="font-size:larger; font-family: 'Pattaya', sans-serif;" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/img/libra.png" class="d-inline-block align-content-center" alt="">
-                    Адвокаты
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-7">
+                <a class="navbar-brand font-weight-bold text-dark" style="font-size:x-large; font-family: 'Pattaya', sans-serif;" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/img/libra_black.png" class="d-inline-block align-content-center" alt="">
+                    Юридическая консультация Железнодорожного района г.Гомеля
                 </a>
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark box-shadow text-uppercase font-weight-bold">
+            <div class="container">
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
@@ -28,10 +34,16 @@
                             </li>
                         }
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Наша коллегия</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Наши адвокаты</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">О нас</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Задать вопрос</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Прайс</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Контакты</a>
                         </li>
                     </ul>
                 </div>
@@ -48,11 +60,11 @@
                             <img src="~/img/exit.png" class="d-inline-block align-content-center" alt="">
                         </a>
                     }
-                </div>             
+                </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container-fluid p-0 m-0">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -65,7 +77,9 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/mybundle.js" asp-append-version="true"></script>
+    @*<script src="~/js/office.js"></script>*@
+    <script src="~/lib/bundle.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

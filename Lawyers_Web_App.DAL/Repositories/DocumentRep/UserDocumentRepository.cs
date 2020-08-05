@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Lawyers_Web_App.DAL.Repositories.Document
+namespace Lawyers_Web_App.DAL.Repositories.DocumentRep
 {
     // логика взаимодействия с таблицей Users
     public class UserDocumentRepository : IRepository<UserDocument>

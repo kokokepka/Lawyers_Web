@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lawyers_Web_App.BLL.Interfaces
+namespace Lawyers_Web_App.BLL.Interfaces.Documents
 {
     public interface IClientDocumentService
     {

@@ -2,7 +2,9 @@
 using Lawyers_Web_App.BLL.DTO.AccountDTO;
 using Lawyers_Web_App.BLL.Infrastructure;
 using Lawyers_Web_App.BLL.Interfaces;
+using Lawyers_Web_App.BLL.Mappers;
 using Lawyers_Web_App.DAL.Entities;
+using Lawyers_Web_App.DAL.Entities.AccountEntities;
 using Lawyers_Web_App.DAL.Entities.UserEntities;
 using Lawyers_Web_App.DAL.Interfaces;
 using System;
@@ -71,11 +73,11 @@ namespace Lawyers_Web_App.BLL.Services
 
         public void RegisterClient(ClientDTO clientDTO)
         {
-            ClientProfile client = _database.ClientProfiles.Find(c => c.Name == clientDTO.Name &&
+            CaseUser client = _database.CaseUsers.Find(c => c.Name == clientDTO.Name &&
             c.Surname == clientDTO.Surname && c.Patronymic == clientDTO.Patronymic && c.DateOfBirth == clientDTO.DateOfBirth).FirstOrDefault();
             if (client == null)
             {
-                _database.ClientProfiles.Create(new ClientProfile
+                _database.CaseUsers.Create(new CaseUser
                 {
                     Name = clientDTO.Name,
                     Surname = clientDTO.Surname,
@@ -90,6 +92,28 @@ namespace Lawyers_Web_App.BLL.Services
             {
                 throw new ValidationException("Клиент уже зарегистрирован!", "");
             }
+        }
+
+        public UserDTO GetUser(string login)
+        {
+            var user = _database.Users.Find(c => c.Login == login).FirstOrDefault();
+            if (user != null)
+            {
+                var mapped = ObjectMapper.Mapper.Map<UserDTO>(user);
+                return mapped;
+            }
+            else
+            {
+                throw new ValidationException("Пользователь не найден!", "");
+            }
+        }
+
+        public void AddUserPhoto(UserDTO userDTO)
+        {
+            User user = _database.Users.Get(userDTO.Id);
+            user.Avatar = userDTO.Avatar;
+            _database.Users.Update(user);
+            _database.Save();
         }
     }
 }
