@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Lawyers_Web_App.BLL.DTO;
 using Lawyers_Web_App.BLL.DTO.CasesDTO;
 using Lawyers_Web_App.BLL.Infrastructure;
@@ -14,10 +15,12 @@ namespace Lawyers_Web_App.WEB.Controllers
     public class CaseController : Controller
     {
         private readonly ICaseService _caseService;
+        private readonly IMapper _mapper;
 
-        public CaseController(ICaseService caseService)
+        public CaseController(ICaseService caseService, IMapper mapper)
         {
             _caseService = caseService;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -54,21 +57,57 @@ namespace Lawyers_Web_App.WEB.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public IActionResult MyCases(int id)
+        private IEnumerable<CaseViewModel> MyCases(int id, string kindcase)
         {
-            //try
-            //{
-            //    var cases = _caseService.GetUserCases(id);
-            //    var model = _mapper.Map<IEnumerable<CaseViewModel>>(cases);
-            //    return PartialView(model);
-            //}
-            //catch (ValidationException ex)
-            //{
-            //    ModelState.AddModelError(ex.Property, ex.Message);
-            //}
+            var cases = _caseService.GetUserCases(id, kindcase);
+            var model = _mapper.Map<IEnumerable<CaseViewModel>>(cases);
+            return model;
+        }
+
+        [HttpGet]
+        public IActionResult MyCriminalCases(int id)
+        {           
+            try
+            {
+                IEnumerable<CaseViewModel> model = MyCases(id, "Уголовное дело");
+                return PartialView(model);
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        public IActionResult MyCivilCases(int id, string kindcase)
+        {
+            try
+            {
+                IEnumerable<CaseViewModel> model = MyCases(id, "Гражданское дело");
+                return PartialView(model);
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }
+            return RedirectToAction("Index", "Home");
+
+        }
+
+        [HttpGet]
+        public IActionResult MyAdministrativeCases(int id, string kindcase)
+        {
+            try
+            {
+                IEnumerable<CaseViewModel> model = MyCases(id, "Административное дело");
+                return PartialView(model);
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

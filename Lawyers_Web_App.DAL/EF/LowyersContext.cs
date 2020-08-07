@@ -44,31 +44,59 @@ namespace Lawyers_Web_App.DAL.EF
         public DbSet<Note> Notes { get; set; }
         public DbSet<Case> Cases { get; set; }
         public DbSet<Category> Categories { get; set; }
-        
+        public DbSet<Instance> Instances { get; set; }
+        public DbSet<KindOfCase> KindOfCases { get; set; }
+        public DbSet<RoleInTheCase> RoleInTheCases { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<User>().HasOne(u => u.Role).WithMany(r => r.Users)
-                .HasForeignKey(u=>u.RoleId).OnDelete(DeleteBehavior.SetNull);
+                .HasForeignKey(u => u.RoleId).OnDelete(DeleteBehavior.SetNull);
+            modelBuilder.Entity<Case>().HasOne(c => c.User).WithMany(u => u.Cases).HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
             modelBuilder.Entity<UserDocument>().HasOne(u => u.User).WithMany(d => d.Documents)
-                .HasForeignKey(u=>u.UserId);
+                .HasForeignKey(u => u.UserId);
             modelBuilder.Entity<ClientDocument>().HasOne(c => c.Case).WithMany(d => d.Documents)
-                .HasForeignKey(u=>u.CaseId).OnDelete(DeleteBehavior.SetNull);
+                .HasForeignKey(u => u.CaseId).OnDelete(DeleteBehavior.SetNull);
             modelBuilder.Entity<Note>().HasOne(s => s.User).WithMany(u => u.Notes)
-                .HasForeignKey(n=>n.UserId).OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(n => n.UserId).OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Case>().HasOne(c => c.Client).WithOne(cu => cu.Case)
+                .HasForeignKey<Client>(c => c.CaseId).OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Client>().HasOne(c => c.Case).WithOne(c => c.Client)
-                .HasForeignKey<Case>(c=>c.ClientId).OnDelete(DeleteBehavior.SetNull);
+            modelBuilder.Entity<CaseUser>().HasOne(c => c.Client).WithOne(c => c.CaseUser)
+                .HasForeignKey<Client>(c => c.CaseUserId).OnDelete(DeleteBehavior.SetNull);
+            modelBuilder.Entity<CaseUser>().HasOne(c => c.Case).WithMany(c => c.Participants)
+                .HasForeignKey(c => c.CaseId).OnDelete(DeleteBehavior.SetNull);
 
-            modelBuilder.Entity<CaseUser>().HasOne(c=>c.Case).WithMany(c=>c.Participants)
-                .HasForeignKey(c=>c.CaseId).OnDelete(DeleteBehavior.SetNull);
-
-            modelBuilder.Entity<Category>().HasMany(c=>c.Сases).WithOne(c=>c.Category).HasForeignKey(c=>c.CategoryId)
+            modelBuilder.Entity<Category>().HasMany(c => c.Сases).WithOne(c => c.Category)
+                .HasForeignKey(c => c.CategoryId)
                 .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Instance>().HasMany(i => i.Cases).WithOne(c => c.Instance)
+                .HasForeignKey(c => c.InstanceId).OnDelete(DeleteBehavior.SetNull);
 
+            modelBuilder.Entity<KindOfCase>().HasMany(i => i.Cases).WithOne(c => c.KindOfCase)
+                .HasForeignKey(c => c.KindOfCaseId).OnDelete(DeleteBehavior.SetNull);
+            modelBuilder.Entity<RoleInTheCase>().HasMany(i => i.CaseUsers).WithOne(c => c.RoleInTheCase)
+                .HasForeignKey(c => c.RoleInTheCaseId);
+            modelBuilder.Entity<RoleInTheCase>().HasOne(r => r.KindOfCase).WithMany(k => k.RoleInTheCases)
+                .HasForeignKey(r => r.KindOfCaseId);
+
+            modelBuilder.Entity<KindOfCaseInstance>()
+            .HasKey(k => new { k.KindOfCaseId, k.InstanceId });
+
+            modelBuilder.Entity<KindOfCaseInstance>()
+                .HasOne(kc => kc.KindOfCase)
+                .WithMany(ki => ki.KindOfCaseInstances)
+                .HasForeignKey(kc => kc.KindOfCaseId);
+
+            modelBuilder.Entity<KindOfCaseInstance>()
+                .HasOne(i => i.Instance)
+                .WithMany(ki => ki.KindOfCaseInstances)
+                .HasForeignKey(i => i.InstanceId);
 
             Role[] roles = new Role[]
             {
@@ -76,6 +104,64 @@ namespace Lawyers_Web_App.DAL.EF
                 new Role(){Id = 2, Name = "Адвокат", Design = "lawyer"}
             };
             modelBuilder.Entity<Role>().HasData(roles);
+
+            KindOfCase[] kindOfCases = new KindOfCase[]
+            {
+                new KindOfCase(){Id = 1, Name = "Уголовное дело"},
+                new KindOfCase(){Id = 2, Name = "Гражданское дело"},
+                new KindOfCase(){Id = 3, Name = "Административное дело"},
+            };
+
+            Instance[] instances = new Instance[]
+            {
+                new Instance(){Id = 1, Name = "первая инстанция" },
+                new Instance(){Id = 2, Name = "апелляционная инстанция"},
+                new Instance(){Id = 3, Name = "надзорная инстанция"},
+                new Instance(){Id = 4, Name = "областной суд"},
+                new Instance(){Id = 5, Name = "верховный суд"},
+            };
+            
+            KindOfCaseInstance[] kindOfCaseInstances = new KindOfCaseInstance[]
+            {
+                new KindOfCaseInstance { InstanceId = instances[0].Id, KindOfCaseId = kindOfCases[0].Id },
+                new KindOfCaseInstance { InstanceId = instances[0].Id, KindOfCaseId = kindOfCases[1].Id },
+                new KindOfCaseInstance { InstanceId = instances[0].Id, KindOfCaseId = kindOfCases[2].Id },
+                new KindOfCaseInstance { InstanceId = instances[1].Id, KindOfCaseId = kindOfCases[0].Id },
+                new KindOfCaseInstance { InstanceId = instances[1].Id, KindOfCaseId = kindOfCases[1].Id },
+                new KindOfCaseInstance { InstanceId = instances[2].Id, KindOfCaseId = kindOfCases[0].Id },
+                new KindOfCaseInstance { InstanceId = instances[2].Id, KindOfCaseId = kindOfCases[1].Id },
+                new KindOfCaseInstance { InstanceId = instances[3].Id, KindOfCaseId = kindOfCases[2].Id },
+                new KindOfCaseInstance { InstanceId = instances[4].Id, KindOfCaseId = kindOfCases[2].Id }
+            };
+            modelBuilder.Entity<KindOfCase>().HasData(kindOfCases);                               
+            modelBuilder.Entity<Instance>().HasData(instances);
+            modelBuilder.Entity<KindOfCaseInstance>().HasData(kindOfCaseInstances);
+
+
+           
+            RoleInTheCase[] roleInTheCases = new RoleInTheCase[]
+            {
+                new RoleInTheCase(){Id = 1, Name = "Обвиняемый", KindOfCaseId = 1},
+                new RoleInTheCase(){Id = 2, Name = "Потерпевший", KindOfCaseId = 1},
+                new RoleInTheCase(){Id = 3, Name = "Осуждённый", KindOfCaseId = 1},
+                new RoleInTheCase(){Id = 4, Name = "Истец", KindOfCaseId = 2},
+                new RoleInTheCase(){Id = 5, Name = "Ответчик", KindOfCaseId = 2},
+                new RoleInTheCase(){Id = 6, Name = "Третье лицо", KindOfCaseId = 2},
+                new RoleInTheCase(){Id = 7, Name = "Заявитель", KindOfCaseId = 2},
+                new RoleInTheCase(){Id = 8, Name = "Потерпевший", KindOfCaseId = 3},
+                new RoleInTheCase(){Id = 9, Name = "Лицо, в отшении которого ведётся дело", KindOfCaseId = 3},
+            };
+
+            modelBuilder.Entity<RoleInTheCase>().HasData(roleInTheCases);
+
+            Category[] categories = new Category[]
+           {
+                new Category(){Id = 1, Name = "жилищные" },
+                new Category(){Id = 2, Name = "брачно-семейные" },
+                new Category(){Id = 3, Name = "наследственные" },
+                new Category(){Id = 4, Name = "имущественные" },
+           };
+            modelBuilder.Entity<Category>().HasData(categories);
 
             User[] users = new User[]
             {
@@ -107,35 +193,125 @@ namespace Lawyers_Web_App.DAL.EF
                     RoleId = 2
                 }
             };
-
             modelBuilder.Entity<User>().HasData(users);
 
-            CaseUser client = new CaseUser()
+            Case[] cases = new Case[]
             {
-                Id = 1,
-                Name = "Пупкин",
-                Surname = "Андрей",
-                Patronymic = "Леонидович",
-                DateOfBirth = DateTime.Parse("22.05.1987"),
-                Email = "pup@gmail.com",
-                Phone = "+375(44)695-25-44"
+                new Case()
+                {
+                    Id = 1,
+                    Title = "Дело №1",
+                    KindOfCaseId = 1,
+                    InstanceId = 1,
+                    UserId = 1,
+                    Date = DateTime.Now.Date,
+                    Article = "122",
+                    Verdict = "не вынесен"
+                },
+                new Case()
+                {
+                    Id = 2,
+                    Title = "Дело №2",
+                    KindOfCaseId = 3,
+                    InstanceId = 4,
+                    UserId = 1,
+                    Date = DateTime.Now.Date,
+                    Article = "255",
+                    Verdict = "не вынесен"
+                },
+                new Case()
+                {
+                    Id = 3,
+                    Title = "Дело №3",
+                    KindOfCaseId = 2,
+                    InstanceId = 2,
+                    UserId = 2,
+                    Date = DateTime.Now.Date,
+                    CategoryId = 1,
+                    Verdict = "не вынесен"
+                },
             };
-            modelBuilder.Entity<CaseUser>().HasData(client);
+            modelBuilder.Entity<Case>().HasData(cases);
 
-            //modelBuilder.Entity<AdministrativeСase>().HasData(new AdministrativeСase[]
-            //{
-            //    new AdministrativeСase
-            //    {
-            //        Id = 1,
-            //        Title = "Дело № 1",
-            //        IsOpen = true,
-            //        ClientId = 1,
-            //        UserId = 1,
-            //        Date = DateTime.Now,
-            //        Article = "Статья № 1",
-            //        Instance = Instance.First
-            //    }
-            //});
+            CaseUser[] caseusers = new CaseUser[]
+            {
+                new CaseUser()
+                {
+                    Id = 1,
+                    Name = "Пупкин",
+                    Surname = "Андрей",
+                    Patronymic = "Леонидович",
+                    DateOfBirth = DateTime.Parse("22.05.1987"),
+                    Email = "pup@gmail.com",
+                    Phone = "+375(44)695-25-44",
+                    CaseId = 1,
+                    RoleInTheCaseId = 2
+                },
+                new CaseUser()
+                {
+                    Id = 2,
+                    Name = "Мупкин",
+                    Surname = "Игорь",
+                    Patronymic = "Леонидович",
+                    DateOfBirth = DateTime.Parse("22.05.1987"),
+                    CaseId = 1,
+                    RoleInTheCaseId = 1
+                },
+                new CaseUser()
+                {
+                    Id = 3,
+                    Name = "Минина",
+                    Surname = "Ирина",
+                    Patronymic = "Олеговна",
+                    DateOfBirth = DateTime.Parse("22.05.1947"),
+                    Phone = "+375(44)665-65-84",
+                    CaseId = 2,
+                    RoleInTheCaseId = 8
+                },
+                new CaseUser()
+                {
+                    Id = 4,
+                    Name = "Кучер",
+                    Surname = "Магомед",
+                    Patronymic = "Алибабович",
+                    DateOfBirth = DateTime.Parse("22.05.1990"),
+                    CaseId = 2,
+                    RoleInTheCaseId = 9
+                },
+                new CaseUser()
+                {
+                    Id = 5,
+                    Name = "Морган",
+                    Surname = "Фримен",
+                    Patronymic = "Леонидович",
+                    DateOfBirth = DateTime.Parse("22.05.1940"),
+                    Email = "morgan@gmail.com",
+                    CaseId = 3,
+                    RoleInTheCaseId = 4
+                },
+                new CaseUser()
+                {
+                    Id = 6,
+                    Name = "Джарет",
+                    Surname = "Лето",
+                    Patronymic = "Леонидович",
+                    DateOfBirth = DateTime.Parse("22.05.1970"),
+                    Email = "pup@gmail.com",
+                    Phone = "+375(44)747-23-78",
+                    CaseId = 3,
+                    RoleInTheCaseId = 5
+                },
+
+            };
+            modelBuilder.Entity<CaseUser>().HasData(caseusers);
+
+            Client[] clients = new Client[]
+            {
+                new Client(){Id = 1, CaseUserId = 1, CaseId = 1, Money = 0 },
+                new Client(){Id = 2, CaseUserId = 3, CaseId = 2, Money = 0 },
+                new Client(){Id = 3, CaseUserId = 5, CaseId = 3, Money = 0 },
+            };
+            modelBuilder.Entity<Client>().HasData(clients);
         }
     }
 }

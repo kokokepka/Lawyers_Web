@@ -32,17 +32,20 @@ namespace Lawyers_Web_App.DAL.Repositories.OtherRep
 
         public IEnumerable<Case> Find(Func<Case, bool> predicate)
         {
-            return db.Cases.Include(c => c.Documents).Include(c => c.Client).Include(c => c.User).Include(c => c.Participants).Where(predicate).ToList();
+            return db.Cases.Include(c => c.Documents).Include(c => c.Client).Include(c => c.User).Include(c => c.Participants)
+                .Include(c=>c.KindOfCase).Include(c=>c.Instance).Where(predicate).ToList();
         }
 
         public Case Get(int? id)
         {
-            return db.Cases.Include(c => c.Documents).Include(c => c.Client).Include(c => c.Participants).Include(c => c.User).FirstOrDefault(n => n.Id == id);
+            return db.Cases.Include(c => c.Documents).Include(c => c.Client).Include(c => c.Participants).Include(c => c.User)
+            .Include(c => c.KindOfCase).Include(c => c.Instance).FirstOrDefault(n => n.Id == id);
         }
 
         public IEnumerable<Case> GetAll()
         {
-            return db.Cases.Include(c => c.Documents).Include(c => c.Client).Include(c => c.User).Include(c => c.Participants);
+            return db.Cases.Include(c => c.Documents).Include(c => c.Client).Include(c => c.User).Include(c => c.Participants)
+                .Include(c => c.KindOfCase).Include(c => c.Instance);
         }
 
         public void Update(Case item)

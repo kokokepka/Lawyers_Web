@@ -11,7 +11,6 @@ namespace Lawyers_Web_App.DAL.Entities.AccountEntities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Design { get; set; }
-
         public virtual IList<User> Users { get; set; }
     }
 }

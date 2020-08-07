@@ -6,10 +6,11 @@ using System.Text;
 
 namespace Lawyers_Web_App.BLL.DTO
 {
-    public class ClientDTO:BaseUserDTO
+    public class ClientDTO
     {
+        public int Id { get; set; }
+        public int? CaseUserId { get; set; }
         public int? CaseId { get; set; }
-        public Case Case { get; set; }
-        public RoleInTheCase RoleInTheCase { get; set; }
+        public int? Money { get; set; }
     }
 }

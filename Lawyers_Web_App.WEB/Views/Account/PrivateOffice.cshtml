@@ -16,19 +16,10 @@
             <li class="nav-item active">
                 <a class="nav-link" asp-area="" asp-controller="Account" asp-action="PrivateOffice">Личный кабинет<span class="sr-only">(current)</span></a>
             </li>
-            @*<li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Other" asp-action="MyCases" 
-                    asp-route-id="@Model.Id" 
-                    method="get"
-                    data-ajax="true"
-                    data-ajax-update="#main_information"
-                    data-ajax-mode="replace"
-                    data-ajax-method="get">Мои дела</a>
-            </li>*@
             <li class="nav-item">
                 <a class="nav-link nav-link-collapse"
-                   href="#"
                    id="hasSubItems"
+                   href="#"
                    data-toggle="collapse"
                    data-target="#collapseSubItems2"
                    aria-controls="collapseSubItems2"
@@ -42,33 +33,26 @@
                            data-ajax-update="#main_information"
                            data-ajax-mode="replace"
                            data-ajax-method="get">Уголовные</a>
-                        @*<a class="nav-link" href="#">
-                            <span class="nav-link-text">Уголовные</span>
-                        </a>*@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Case" asp-action="MyCivilCases"
                            asp-route-id="@Model.Id"
+                           asp-route-kindcase="Гражданское дело"
                            method="get"
                            data-ajax="true"
                            data-ajax-update="#main_information"
                            data-ajax-mode="replace"
                            data-ajax-method="get">Гражданские</a>
-                        @*<a class="nav-link" href="#">
-                            <span class="nav-link-text">Гражданские</span>
-                        </a>*@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Case" asp-action="MyAdministrativeCases"
                            asp-route-id="@Model.Id"
+                           asp-route-kindcase="Административное дело"
                            method="get"
                            data-ajax="true"
                            data-ajax-update="#main_information"
                            data-ajax-mode="replace"
                            data-ajax-method="get">Административные</a>
-                        @*<a class="nav-link" href="#">
-                            <span class="nav-link-text">Административные</span>
-                        </a>*@
                     </li>
                 </ul>
             </li>

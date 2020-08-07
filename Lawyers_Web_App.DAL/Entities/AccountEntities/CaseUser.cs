@@ -12,6 +12,8 @@ namespace Lawyers_Web_App.DAL.Entities.AccountEntities
     {
         public int? CaseId { get; set; }
         public Case Case { get; set; }
+        public int RoleInTheCaseId { get; set; }
         public RoleInTheCase RoleInTheCase { get; set; }
+        public Client Client { get; set; }
     }
 }

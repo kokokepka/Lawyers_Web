@@ -22,17 +22,17 @@ body {
     transition: all 0.4s;
 }
 
-.nav-link-collapse:after {
+/*.nav-link-collapse:after {
     float: right;
-    content: '\f067';
-    font-family: 'FontAwesome';
-}
+    content: '+';*/
+    /*font-family: 'FontAwesome';*/
+/*}
 
 .nav-link-show:after {
     float: right;
-    content: '\f068';
-    font-family: 'FontAwesome';
-}
+    content: '-';*/
+    /*font-family: 'FontAwesome';*/
+/*}*/
 
 .nav-item ul.nav-second-level {
     padding-left: 0;

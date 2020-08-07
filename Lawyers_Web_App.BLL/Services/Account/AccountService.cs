@@ -73,25 +73,25 @@ namespace Lawyers_Web_App.BLL.Services
 
         public void RegisterClient(ClientDTO clientDTO)
         {
-            CaseUser client = _database.CaseUsers.Find(c => c.Name == clientDTO.Name &&
-            c.Surname == clientDTO.Surname && c.Patronymic == clientDTO.Patronymic && c.DateOfBirth == clientDTO.DateOfBirth).FirstOrDefault();
-            if (client == null)
-            {
-                _database.CaseUsers.Create(new CaseUser
-                {
-                    Name = clientDTO.Name,
-                    Surname = clientDTO.Surname,
-                    Patronymic = clientDTO.Patronymic,
-                    DateOfBirth = clientDTO.DateOfBirth,
-                    Phone = clientDTO.Phone,
-                    Email = clientDTO.Email
-                });
-                _database.Save();
-            }
-            else
-            {
-                throw new ValidationException("Клиент уже зарегистрирован!", "");
-            }
+            //CaseUser client = _database.CaseUsers.Find(c => c.Name == clientDTO.Name &&
+            ////c.Surname == clientDTO.Surname && c.Patronymic == clientDTO.Patronymic && c.DateOfBirth == clientDTO.DateOfBirth).FirstOrDefault();
+            ////if (client == null)
+            ////{
+            ////    _database.CaseUsers.Create(new CaseUser
+            ////    {
+            ////        Name = clientDTO.Name,
+            ////        Surname = clientDTO.Surname,
+            ////        Patronymic = clientDTO.Patronymic,
+            ////        DateOfBirth = clientDTO.DateOfBirth,
+            ////        Phone = clientDTO.Phone,
+            ////        Email = clientDTO.Email
+            ////    });
+            //    _database.Save();
+            //}
+            //else
+            //{
+            //    throw new ValidationException("Клиент уже зарегистрирован!", "");
+            //}
         }
 
         public UserDTO GetUser(string login)
@@ -110,10 +110,10 @@ namespace Lawyers_Web_App.BLL.Services
 
         public void AddUserPhoto(UserDTO userDTO)
         {
-            User user = _database.Users.Get(userDTO.Id);
-            user.Avatar = userDTO.Avatar;
-            _database.Users.Update(user);
-            _database.Save();
+            //User user = _database.Users.Get(userDTO.Id);
+            //user.Avatar = userDTO.Avatar;
+            //_database.Users.Update(user);
+            //_database.Save();
         }
     }
 }

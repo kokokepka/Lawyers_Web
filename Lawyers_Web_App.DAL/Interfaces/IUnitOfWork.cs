@@ -22,6 +22,9 @@ namespace Lawyers_Web_App.DAL.Interfaces
         IRepository<Note> Notes { get; }
         IRepository<Case> Cases { get; }
         IRepository<Category> Categories { get; }
+        IRepository<KindOfCase> KindOfCases { get; }
+        IRepository<Instance> Instances { get; }
+        IRepository<RoleInTheCase> CaseRoles { get; }
         void Save();
     }
 }

@@ -15,6 +15,6 @@ namespace Lawyers_Web_App.WEB.Models
         public DateTime? DateOfBirth { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        //public IFormFile Avatar { get; set; }
+        public IFormFile Avatar { get; set; }
     }
 }

@@ -117,12 +117,12 @@ namespace Lawyers_Web_App.WEB.Controllers
                 {
                     _accountService.RegisterClient(new ClientDTO
                     {
-                        Name = model.Name,
-                        Surname = model.Surname,
-                        Patronymic = model.Patronymic,
-                        DateOfBirth = model.DateOfBirth,
-                        Email = model.Email,
-                        Phone = model.Phone
+                        //Name = model.Name,
+                        //Surname = model.Surname,
+                        //Patronymic = model.Patronymic,
+                        //DateOfBirth = model.DateOfBirth,
+                        //Email = model.Email,
+                        //Phone = model.Phone
                     });
                     return RedirectToAction("Index", "Home");
                 }
