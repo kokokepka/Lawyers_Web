@@ -10,7 +10,8 @@ namespace Lawyers_Web_App.BLL.Interfaces.Other
     {
         void MakeNote(NoteDTO noteDto);
         NoteDTO GetNote(int? id);
-        IEnumerable<NoteDTO> GetUserNotes(UserDTO userDto);
+        IEnumerable<NoteDTO> GetUserNotes(int userId);
+        void DeleteNote(int id);
         void Dispose();
     }
 }

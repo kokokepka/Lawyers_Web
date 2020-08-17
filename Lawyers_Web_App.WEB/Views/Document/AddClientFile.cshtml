@@ -1,29 +1,15 @@
-﻿@model Lawyers_Web_App.WEB.Models.DocumentViewModel
+﻿@model Lawyers_Web_App.WEB.Models.DocViewModel
 
-@{
-    ViewData["Title"] = "Login";
-}
-
-<h1>Login</h1>
-
-<h4>LoginViewModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="AddClientFile" enctype="multipart/form-data" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="UploadedFile" class="control-label"></label>
-                <input asp-for="UploadedFile" class="form-control" type="file"/>
-                <span asp-validation-for="UploadedFile" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Загрузить" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="col-md-12">
+    <form asp-action="AddClientFile" enctype="multipart/form-data" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="UploadedFile" class="control-label"></label>
+            <input asp-for="UploadedFile" class="form-control" type="file"/>
+            <span asp-validation-for="UploadedFile" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Загрузить" class="btn btn-primary" />
+        </div>
+    </form>
 </div>

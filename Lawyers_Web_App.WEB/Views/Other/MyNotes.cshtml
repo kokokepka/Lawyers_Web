@@ -1,0 +1,47 @@
+﻿
+@model IEnumerable<Lawyers_Web_App.WEB.Models.Other.NoteViewModel>
+<div class="row">
+    <div class="col align-self-center">
+        @*<div class="text-center">*@
+            <h1>Мои события и заметки.</h1>
+        @*</div>*@
+    </div>
+</div>
+<div class="row">
+    <div class="col align-self-center">
+        <a class="btn btn-primary"
+           asp-controller="Other"
+           asp-action="MakeNote"
+           method="get"
+           data-ajax="true"
+           data-ajax-update="#main_information"
+           data-ajax-mode="replace"
+           data-ajax-method="get">Добавить заметку или событие</a>
+    </div>
+</div>
+@if (Model.Count() == 0)
+{
+    <div class="text-center">
+        <h1>Заметок и событий нету.</h1>
+    </div>
+}
+else
+{
+    @foreach (var item in Model)
+    {
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">@item.Title</h5>
+                <h6 class="card-title">@item.Date.ToString("dd.mm.yyyy")</h6>
+                <h6 class="card-title">@item.Time.ToString()</h6>
+                <h6 class="card-subtitle mb-2 text-muted">Подзаголовок карты</h6>
+                <p class="card-text">@item.Text</p>
+                @*<a href="#" class="card-link">Ссылка карты</a>*@
+                <a asp-action="DeleteNote" asp-controller="Case" class="card-link"
+                   asp-route-id="@item.Id">Удалить</a>
+            </div>
+        </div>
+    }
+}
+
+

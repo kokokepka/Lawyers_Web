@@ -10,9 +10,13 @@ namespace Lawyers_Web_App.BLL.Interfaces
     {
         AccountDTO Login(string login, string password);
         void Register(UserDTO userDTO);
-        void RegisterClient(ClientDTO clientDTO);
         UserDTO GetUser(string login);
+        UserDTO GetUser(int id);
         void AddUserPhoto(UserDTO userDTO);
+        void AddUserDocument(int userId, UserDocDTO userDoc);
+        UserDocDTO GetUserDocument(int docId);
+        IEnumerable<UserDocDTO> GetUserDocuments(int userId);
+        void Delete(int userId);
         void Dispose();
     }
 }

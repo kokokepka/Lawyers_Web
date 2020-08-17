@@ -40,7 +40,7 @@ namespace Lawyers_Web_App.WEB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddClientFile(DocumentViewModel model)
+        public async Task<IActionResult> AddClientFile(DocViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -54,7 +54,7 @@ namespace Lawyers_Web_App.WEB.Controllers
                         await model.UploadedFile.CopyToAsync(fileStream);
                     }
                     _clientDocumentService.MakeDoc(new CaseDocDTO { Name = model.UploadedFile.FileName, Path = path,
-                        Date = DateTime.Now.Date, CaseId = model.SomeoneId});
+                        Date = DateTime.Now.Date, CaseId = model.SomethingId});
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -68,7 +68,7 @@ namespace Lawyers_Web_App.WEB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUserFile(DocumentViewModel model)
+        public async Task<IActionResult> AddUserFile(DocViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace Lawyers_Web_App.WEB.Controllers
                         Name = model.UploadedFile.FileName,
                         Path = path,
                         Date = DateTime.Now.Date,
-                        UserId = model.SomeoneId
+                        UserId = model.SomethingId
                     });
                     return RedirectToAction("Index", "Home");
                 }

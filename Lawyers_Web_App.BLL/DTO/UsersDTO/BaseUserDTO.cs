@@ -12,6 +12,7 @@ namespace Lawyers_Web_App.BLL.DTO
         public string Patronymic { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string Phone { get; set; }
+        public string HomePhone { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }
     }

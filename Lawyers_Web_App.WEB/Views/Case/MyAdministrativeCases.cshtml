@@ -1,0 +1,98 @@
+﻿@model Lawyers_Web_App.WEB.Models.Cases.AboutCaseModel
+
+<div class="row">
+    <div class="col-md-10 text-center">
+        <h3>Административные дела</h3>
+    </div>
+    <div class="col-md-10 text-center">
+        <a class="btn btn-primary" asp-action="MadeCase" asp-controller="Case"
+            asp-route-kind_case_id="@Model.KindOfCase.Id"
+            method="get"
+            data-ajax="true"
+            data-ajax-update="#main_information"
+            data-ajax-mode="replace"
+            data-ajax-method="get">
+            Добавить новое дело
+        </a>
+    </div>
+</div>
+@if (Model.Cases.Count() == 0)
+{
+    <div class="text-center">
+        <h1>На данный момент административных дел нет.</h1>
+    </div>
+
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h3>Административные дела</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Название</th>
+                        <th>Статья</th>
+                        <th>Инстанция</th>
+                        <th>Дата</th>
+                        <th>Информация</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Cases)
+                    {
+                        <tr>
+                            <td>@item.Title</td>
+                            <td>@item.ArticleOrCategory</td>
+                            <td>@item.Instance</td>
+                            <td>@item.Date.ToString("dd.MM.yyyy")</td>
+                            <td>
+                                <a class="btn btn-outline-danger"
+                                   asp-area="" asp-controller="Case"
+                                   asp-action="AboutCase"
+                                   asp-route-id="@item.Id"
+                                   method="get"
+                                   data-ajax="true"
+                                   data-ajax-update="#main_information"
+                                   data-ajax-mode="replace"
+                                   data-ajax-method="get">
+                                    Подробнее
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Запустить модальное окно
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

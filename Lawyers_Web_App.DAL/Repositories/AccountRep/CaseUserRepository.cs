@@ -30,19 +30,19 @@ namespace Lawyers_Web_App.DAL.Repositories.AccountRep
 
         public IEnumerable<CaseUser> Find(Func<CaseUser, bool> predicate)
         {
-            return db.CaseUsers.Include(c => c.Case)
+            return db.CaseUsers.Include(c => c.Case).Include(c=>c.RoleInTheCase)
                 .Where(predicate).ToList();
         }
 
         public CaseUser Get(int? id)
         {
-            return db.CaseUsers.Include(c => c.Case)
+            return db.CaseUsers.Include(c => c.Case).Include(c => c.RoleInTheCase)
                 .FirstOrDefault(u => u.Id == id);
         }
 
         public IEnumerable<CaseUser> GetAll()
         {
-            return db.CaseUsers.Include(c => c.Case);
+            return db.CaseUsers.Include(c => c.Case).Include(c => c.RoleInTheCase);
         }
 
         public void Update(CaseUser item)

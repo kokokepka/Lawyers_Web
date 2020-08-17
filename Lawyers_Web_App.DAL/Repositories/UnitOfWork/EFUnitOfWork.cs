@@ -13,6 +13,7 @@ using Lawyers_Web_App.DAL.Repositories.DocumentRep;
 using Lawyers_Web_App.DAL.Repositories.CaseRep;
 using Lawyers_Web_App.DAL.Entities.AccountEntities;
 using Lawyers_Web_App.DAL.Entities.Cases.Additionally;
+using Lawyers_Web_App.DAL.Entities.Other;
 
 namespace Lawyers_Web_App.DAL.Repositories
 {
@@ -25,12 +26,14 @@ namespace Lawyers_Web_App.DAL.Repositories
         private RoleRepository _roleRepository;
         private UserDocumentRepository _userDocumentRepository;
         private ClientDocumentRepository _clientDocumentRepository;
-        private NoteRepositity _noteRepositity;
+        private NoteRepository _noteRepositity;
         private CaseRepository _caseRepositoty;
-        private CategoriesRepository _categoryRepository;
+        //private CategoriesRepository _categoryRepository;
         private InstanceRepository _instanceRepository;
         private KindOfCaseRepository _kindOfCaseRepository;
         private RoleInTheCaseRepository _roleInTheCaseRepository;
+        private QuestionRepository _questionRepository;
+        private CommentRepository _commentRepository;
 
 
         public EFUnitOfWork()
@@ -44,9 +47,9 @@ namespace Lawyers_Web_App.DAL.Repositories
 
         public IRepository<UserDocument> UserDocuments => _userDocumentRepository ?? new UserDocumentRepository(db);
 
-        public IRepository<ClientDocument> ClientDocuments => _clientDocumentRepository ?? new ClientDocumentRepository(db);
+        public IRepository<CaseDocument> ClientDocuments => _clientDocumentRepository ?? new ClientDocumentRepository(db);
 
-        public IRepository<Note> Notes => _noteRepositity ?? new NoteRepositity(db);
+        public IRepository<Note> Notes => _noteRepositity ?? new NoteRepository(db);
 
         public IRepository<CaseUser> CaseUsers => _caseUserRepository ?? new CaseUserRepository(db);
 
@@ -54,13 +57,17 @@ namespace Lawyers_Web_App.DAL.Repositories
 
         public IRepository<Client> Clients => _clientProfileRepository ?? new ClientRepository(db);
 
-        public IRepository<Category> Categories => _categoryRepository ?? new CategoriesRepository(db);
+        //public IRepository<Category> Categories => _categoryRepository ?? new CategoriesRepository(db);
 
         public IRepository<KindOfCase> KindOfCases => _kindOfCaseRepository ?? new KindOfCaseRepository(db);
 
         public IRepository<Instance> Instances => _instanceRepository ?? new InstanceRepository(db);
 
         public IRepository<RoleInTheCase> CaseRoles => _roleInTheCaseRepository ?? new RoleInTheCaseRepository(db);
+
+        public IRepository<Question> Questions => _questionRepository ?? new QuestionRepository(db);
+
+        public IRepository<Comment> Comments => _commentRepository ?? new CommentRepository(db);
 
         private bool disposed = false;
 

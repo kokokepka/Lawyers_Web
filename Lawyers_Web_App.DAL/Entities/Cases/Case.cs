@@ -22,11 +22,11 @@ namespace Lawyers_Web_App.DAL.Entities.Cases
         public int UserId { get; set; }
         public User User { get; set; }
         public DateTime Date { get; set; }
-        public string Article { get; set; }
-        public string Verdict { get; set; }
-        public int? CategoryId { get; set; }
-        public Category Category { get; set; }
+        public string ArticleOrCategory { get; set; }
+        public string VerdictOrDecision { get; set; }
+        //public int? CategoryId { get; set; }
+        //public Category Category { get; set; }
         public virtual IList<CaseUser> Participants { get; set; }
-        public virtual IList<ClientDocument> Documents { get; set; }
+        public virtual IList<CaseDocument> Documents { get; set; }
     }
 }

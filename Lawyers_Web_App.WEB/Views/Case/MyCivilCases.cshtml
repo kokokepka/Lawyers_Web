@@ -1,0 +1,68 @@
+﻿@model Lawyers_Web_App.WEB.Models.Cases.AboutCaseModel
+
+<div class="row">
+    <div class="col-md-10 text-center">
+        <h3>Гражданские дела</h3>
+    </div>
+    <div class="col-md-10 text-center">
+        <a class="btn btn-primary" asp-action="MadeCase" asp-controller="Case"
+           asp-route-kind_case_id="@Model.KindOfCase.Id"
+           method="get"
+           data-ajax="true"
+           data-ajax-update="#main_information"
+           data-ajax-mode="replace"
+           data-ajax-method="get">
+            Добавить новое дело
+        </a>
+    </div>
+</div>
+@if (Model.Cases.Count() == 0)
+{
+    <div class="text-center">
+        <h1>На данный момент гражданских дел нет.</h1>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Название</th>
+                        <th>Категория</th>
+                        <th>Инстанция</th>
+                        <th>Дата</th>
+                        <th>Информация</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Cases)
+                    {
+                        <tr>
+                            <td>@item.Title</td>
+                            <td>@item.ArticleOrCategory</td>
+                            <td>@item.Instance</td>
+                            <td>@item.Date.ToString("dd.MM.yyyy")</td>
+                            <td>
+                                <a class="btn btn-outline-danger"
+                                   asp-area="" asp-controller="Case"
+                                   asp-action="AboutCase"
+                                   asp-route-id="@item.Id"
+                                   method="get"
+                                   data-ajax="true"
+                                   data-ajax-update="#main_information"
+                                   data-ajax-mode="replace"
+                                   data-ajax-method="get">
+                                    Подробнее
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+

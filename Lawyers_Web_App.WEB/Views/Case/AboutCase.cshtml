@@ -1,0 +1,174 @@
+﻿@model Lawyers_Web_App.WEB.Models.Cases.CaseViewModel
+    <div class="container">
+        <div class="text-left">
+            <h1>@Model.Title</h1>
+        </div>
+        <table class="table">
+            <tbody style="font-size:large">
+                <tr>
+                    <td>Вид дела:</td>
+                    <td>@Model.KindOfCase</td>
+                </tr>
+                <tr>
+                    @if (Model.KindOfCase == "Гражданское дело")
+                    {
+                        <td>Статья</td>
+                    }
+                    else
+                    {
+                        <td>Категория:</td>
+                    }
+                    <td>@Model.ArticleOrCategory</td>
+                </tr>
+                <tr>
+                    @if (Model.KindOfCase == "Уголовное дело")
+                    {
+                        <td>Приговор:</td>
+                    }
+                    else if (Model.KindOfCase == "Гражданское дело")
+                    {
+                        <td>Решение:</td>
+
+                    }
+                    else
+                    {
+                        <td>Постановление:</td>
+                    }
+                    <td>@Model.VerdictOrDecision</td>
+                </tr>
+                <tr>
+                    <td>Инстанция:</td>
+                    <td>@Model.Instance</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="text-left">Клиент</h3>
+        <table class="table table-sm">
+            <tbody>
+                <tr>
+                    <td>ФИО:</td>
+                    <td>@Model.Client.Surname @Model.Client.Name  @Model.Client.Patronymic</td>
+                </tr>
+                <tr>
+                    <td>Дата рождения:</td>
+                    <td>@Model.Client.DateOfBirth.ToString("dd.MM.yyyy")</td>
+                </tr>
+                <tr>
+                    <td>Статус:</td>
+                    <td>@Model.Client.RoleInTheCase</td>
+                </tr>
+                <tr>
+                    <td>Номер телефона:</td>
+                    <td>@Model.Client.Phone</td>
+                </tr>
+                <tr>
+                    <td>Электронная почта:</td>
+                    <td>@Model.Client.Email</td>
+                </tr>
+                <tr>
+                    <td>Адрес:</td>
+                    <td>@Model.Client.Address</td>
+                </tr>
+            </tbody>
+        </table>
+
+        @*<div class="text-center">
+            <h3>Участники дела</h3>
+        </div>*@
+        <div class="row">
+            <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+                <div class="text-center">
+                    <h3>Участники дела</h3>
+                </div>
+            </div>
+            <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+                <a class="btn btn-outline-danger"
+                   asp-area="" asp-controller="Case"
+                   asp-action="AddParticipantInCase"
+                   asp-route-caseid="@Model.Id"
+                   asp-route-kindcase="@Model.KindOfCaseId"
+                   method="get"
+                   data-ajax="true"
+                   data-ajax-update="#main_information"
+                   data-ajax-mode="replace"
+                   data-ajax-method="get">
+                    Добавить участника
+                </a>
+            </div>
+        </div>
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <td>ФИО</td>
+                    <td>Роль в деле</td>
+                    <td>Номер телефона</td>
+                    <td>Адрес</td>
+                    <td>Дата рождения</td>
+                    <td>Email</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Participants)
+                {
+                    <tr>
+                        <td>@item.Surname @item.Name @item.Patronymic</td>
+                        <td>@item.RoleInTheCase</td>
+                        <td>@item.Phone</td>
+                        <td>@item.Address</td>
+                        <td>@item.DateOfBirth.ToString("dd.MM.yyyy")</td>
+                        <td>@item.Email</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+                <h3>Материалы по делу</h3>
+            </div>
+            <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0" id="add_doc">
+                <a class="btn btn-outline-danger"
+                   asp-area="" asp-controller="Case"
+                   asp-action="AddDocumentCase"
+                   asp-route-caseid="@Model.Id"
+                   method="get"
+                   data-ajax="true"
+                   data-ajax-update="#add_doc"
+                   data-ajax-mode="replace"
+                   data-ajax-method="get">
+                    Добавить материал
+                </a>
+            </div>
+        </div>
+        @if (Model.Documents.Count() != 0)
+        {
+            <table class="table">
+                <tbody>
+                    @foreach (var item in Model.Documents)
+                    {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>
+                            <a class="btn-outline-primary" asp-area="" asp-controller="Case" asp-action="Download"
+                               asp-route-file_name="@item.Name"
+                               asp-route-path="@item.Path">Скачать</a>
+                        </td>
+                        <td>
+                            <a class="btn-outline-primary" asp-area="" asp-controller="Case" asp-action="DeleteDocument"
+                               asp-route-id="@item.Id"
+                               asp-route-caseid="@Model.Id"
+                               asp-route-path="@item.Path"
+                               data-ajax="true" data-ajax-update="#main_information" data-ajax-mode="replace">Удалить</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="text-center">
+                <h4>Материалы по делу не найдены. Возможно вы ещё ниодин не добавили.</h4>
+            </div>
+        }
+    </div>

@@ -35,7 +35,7 @@ namespace Lawyers_Web_App.BLL.Services
             if (note == null)
                 throw new ValidationException("Заметка не найдена", "");
 
-            return new NoteDTO { Id = note.Id, DateTime = note.DateTime, Text = note.Text, IsDone = note.IsDone, UserId = note.UserId };
+            return new NoteDTO { Id = note.Id, Date = note.Date, Time = note.Time, Text = note.Text, IsDone = note.IsDone, UserId = note.UserId };
         }
 
         public IEnumerable<NoteDTO> GetUserNotes(UserDTO userDto)
@@ -52,13 +52,30 @@ namespace Lawyers_Web_App.BLL.Services
                 throw new ValidationException("Пользователь не найден", "");
             Note _newNote = new Note
             {
-                DateTime = noteDto.DateTime,
+                Date = noteDto.Date,
+                Time = noteDto.Time,
+                Title = noteDto.Title,
                 Text = noteDto.Text,
                 IsDone = noteDto.IsDone,
                 User = user
             };
             _database.Notes.Create(_newNote);
             _database.Save();
+        }
+
+        public void DeleteNote(int id)
+        {
+            _database.Notes.Delete(id);
+        }
+
+        public IEnumerable<NoteDTO> GetUserNotes(int userId)
+        {
+            User user = _database.Users.Get(userId);
+            if (user == null)
+                throw new ValidationException("Адвокат не найден", "");
+            var notes = _database.Notes.Find(n => n.UserId == user.Id);
+            var mapped = ObjectMapper.Mapper.Map<IEnumerable<NoteDTO>>(notes);
+            return mapped;
         }
     }
 }

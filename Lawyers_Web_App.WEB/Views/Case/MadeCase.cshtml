@@ -1,0 +1,134 @@
+﻿@model Lawyers_Web_App.WEB.Models.Cases.CreateNewCaseViewModel
+@{
+    Layout = null;
+}
+
+<h4>Новое @Model.PartNewCase.KindOfCase</h4>
+<hr />
+<form asp-action="MadeCase" data-ajax="true" data-ajax-update="#main_information" data-ajax-mode="replace">
+    <div class="row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @if (Model.PartNewCase.KindOfCaseId == 2)
+                {
+                    <label class="control-label">Введите категорию</label>
+                }
+                else
+                {
+                    <label class="control-label">Введите статью</label>
+                }
+                <input asp-for="PartNewCase.ArticleOrCategory" class="form-control" />
+                <span asp-validation-for="PartNewCase.ArticleOrCategory" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PartNewCase.Date" class="control-label"></label>
+                <input asp-for="PartNewCase.Date" class="form-control" value="@DateTime.Now.Date.ToString()" />
+                <span asp-validation-for="PartNewCase.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @if (Model.PartNewCase.KindOfCaseId == 2)
+                {
+                    <label class="control-label">Решение</label>
+                }
+                else if (Model.PartNewCase.KindOfCaseId == 1)
+                {
+                    <label class="control-label">Приговор</label>
+                }
+                else
+                {
+                    <label class="control-label">Постановление</label>
+                }
+                <input asp-for="PartNewCase.VerdictOrDecision" class="form-control" />
+                <span asp-validation-for="PartNewCase.VerdictOrDecision" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.PartNewCase.InstanceId" class="control-label"></label>
+                <select asp-for="@Model.PartNewCase.InstanceId" class="form-control">
+                    @foreach (var item in Model.PartNewCase.InstanceModels)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="@Model.PartNewCase.InstanceId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="PartNewCase.KindOfCaseId" class="form-control" type="hidden"
+                       value="@Model.PartNewCase.KindOfCaseId" />
+            </div>
+            <div class="form-group">
+                <input asp-for="PartNewCase.UserId" class="form-control" type="hidden"
+                       value="@Model.PartNewCase.UserId" />
+            </div>
+            <div class="form-group">
+                <input asp-for="@Model.PartNewCase.InstanceModels" class="form-control" type="hidden"
+                       value="@Model.PartNewCase.InstanceModels" />
+            </div>
+            <div class="form-group">
+                <input asp-for="@Model.PartNewCase.KindOfCase" class="form-control" type="hidden"
+                       value="@Model.PartNewCase.KindOfCase" />
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Client.Name" class="control-label"></label>
+                <input asp-for="Client.Name" class="form-control" />
+                <span asp-validation-for="Client.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Client.Surname" class="control-label"></label>
+                <input asp-for="Client.Surname" class="form-control" />
+                <span asp-validation-for="Client.Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Client.Patronymic" class="control-label"></label>
+                <input asp-for="Client.Patronymic" class="form-control" />
+                <span asp-validation-for="Client.Patronymic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Client.DateOfBirth" class="control-label"></label>
+                <input asp-for="Client.DateOfBirth" class="form-control" />
+                <span asp-validation-for="Client.DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Client.Phone" class="control-label"></label>
+                <input asp-for="Client.Phone" class="form-control" />
+                <span asp-validation-for="Client.Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Client.Email" class="control-label"></label>
+                <input asp-for="Client.Email" class="form-control" />
+                <span asp-validation-for="Client.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Client.Address" class="control-label"></label>
+                <input asp-for="Client.Address" class="form-control" />
+                <span asp-validation-for="Client.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Client.CaseId" class="form-control" type="hidden" value="@Model.Client.CaseId" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Client.RoleId" class="control-label"></label>
+                <select asp-for="Client.RoleId" class="form-control">
+                    @foreach (var item in Model.Client.Roles)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="Client.RoleId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="@Model.Client.Roles" class="form-control" type="hidden" value="@Model.Client.Roles" />
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-2">
+            <div class="form-group">
+                <input type="submit" value="Создать" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>

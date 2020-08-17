@@ -18,10 +18,10 @@ namespace Lawyers_Web_App.BLL.DTO.CasesDTO
         public int ClientId { get; set; }
         public int UserId { get; set; }
         public DateTime Date { get; set; }
-        public string Article { get; set; }
-        public string Verdict { get; set; }
-        public int? CategoryId { get; set; }
-        public string Category { get; set; }
+        public string ArticleOrCategory { get; set; }
+        public string VerdictOrDecision { get; set; }
+        //public int? CategoryId { get; set; }
+        //public string Category { get; set; }
         //public virtual IList<CaseUser> Participants { get; set; }
         //public virtual IList<ClientDocument> Documents { get; set; }
     }

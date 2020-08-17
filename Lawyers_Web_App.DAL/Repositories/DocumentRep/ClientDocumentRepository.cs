@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Lawyers_Web_App.DAL.Repositories.DocumentRep
 {
-    public class ClientDocumentRepository : IRepository<ClientDocument>
+    public class ClientDocumentRepository : IRepository<CaseDocument>
     {
         private LowyersContext db;
         public ClientDocumentRepository(LowyersContext context)
@@ -17,34 +17,34 @@ namespace Lawyers_Web_App.DAL.Repositories.DocumentRep
             db = context;
         }
 
-        public void Create(ClientDocument item)
+        public void Create(CaseDocument item)
         {
             db.ClientDocuments.Add(item);
         }
 
         public void Delete(int id)
         {
-            ClientDocument doc = db.ClientDocuments.FirstOrDefault(c => c.Id == id);
+            CaseDocument doc = db.ClientDocuments.FirstOrDefault(c => c.Id == id);
             if (doc != null)
                 db.ClientDocuments.Remove(doc);
         }
 
-        public IEnumerable<ClientDocument> Find(Func<ClientDocument, bool> predicate)
+        public IEnumerable<CaseDocument> Find(Func<CaseDocument, bool> predicate)
         {
             return db.ClientDocuments.Where(predicate).ToList();
         }
 
-        public ClientDocument Get(int? id)
+        public CaseDocument Get(int? id)
         {
             return db.ClientDocuments.FirstOrDefault(u => u.Id == id);
         }
 
-        public IEnumerable<ClientDocument> GetAll()
+        public IEnumerable<CaseDocument> GetAll()
         {
             return db.ClientDocuments;
         }
 
-        public void Update(ClientDocument item)
+        public void Update(CaseDocument item)
         {
             db.Entry(item).State = EntityState.Modified;
         }

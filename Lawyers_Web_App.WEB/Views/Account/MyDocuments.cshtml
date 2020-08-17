@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Lawyers_Web_App.WEB.Models.DocViewModel>
+
+<div class="row justify-content-md-center">
+    <div class="col-md-auto">
+        <h3>Мои документы</h3>
+    </div>
+</div>
+<br />
+<div class="row justify-content-md-center">
+    <div class="col-md-auto"
+         id="add_doc_user">
+        <a class="btn btn-primary" asp-controller="Account"
+           asp-action="AddDocUser"
+           method="post"
+           data-ajax="true"
+           data-ajax-update="#add_doc_user"
+           data-ajax-mode="replace"
+           data-ajax-method="get">
+            Добавить документ
+        </a>
+    </div>
+</div>
+
+<br />
+@if (Model.Count() == 0)
+{
+    <div class="text-center">
+        <h1>На данный момент загруженных документов нет.</h1>
+    </div>
+}
+else
+{
+    <table class="table">
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>
+                        <a class="btn btn-primary" asp-area="" asp-controller="Case" asp-action="Download"
+                           asp-route-file_name="@item.Name"
+                           asp-route-path="@item.Path">Скачать</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" asp-area="" asp-controller="Account" asp-action="DeleteDocument"
+                           asp-route-id="@item.Id"
+                           asp-route-path="@item.Path">Удалить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+

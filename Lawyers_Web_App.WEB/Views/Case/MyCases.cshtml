@@ -1,37 +1,69 @@
-﻿@model IEnumerable<Lawyers_Web_App.WEB.Models.CaseViewModel>
-@foreach (var item in Model)
+﻿@model Lawyers_Web_App.WEB.Models.Cases.AboutCaseModel
+
+<div class="row">
+    <div class="col-md-10 text-center">
+        <h3>@Model.Title</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-10 text-center">
+        <a class="btn btn-primary" asp-action="MadeCase" asp-controller="Case"
+            asp-route-kind_case_id="@Model.KindOfCase.Id"
+            method="get"
+            data-ajax="true"
+            data-ajax-update="#main_information"
+            data-ajax-mode="replace"
+            data-ajax-method="get">
+            Добавить новое дело
+        </a>
+    </div>
+</div>
+@if (Model.Cases.Count() == 0)
 {
-    @*<div class="row">
+    <div class="text-center">
+        <h1>@Model.Title на данный момент отсутствуют.</h1>
+    </div>
+
+}
+else
+{
+    <div class="row">
         <div class="col-md-12">
-            <table class="table table-secondary table-hover">
-                <thead>
+            <table class="table table-striped">
+                <thead class="thead-light">
                     <tr>
-                        <th>№ Дела</th>
                         <th>Название</th>
-                        <th>Бренд</th>
-                        <th>Номер</th>
-                        <th>Цена</th>
-                        <th>Поставщик</th>
+                        <th>Статья/Категория</th>
+                        <th>Инстанция</th>
+                        <th>Дата</th>
+                        <th>Информация</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Заказ № @item.OrderId</td>
-                        <td>@item.NameClient</td>
-                        <td>@item.NumberPhone</td>
-                        <td>@item.Email</td>
-                        <td>@item.AllPrice рублей</td>
-                        <td>
-                            <button class="btn btn-dark" id="@item.OrderId">Расскрыть</button>
-                        </td>
-                        <td>
-                            <a class="btn btn-danger" asp-area="" asp-controller="Home" asp-action="DelOrder" asp-route-id="@item.OrderId">Удалить</a>
-                        </td>
-                    </tr>
+                    @foreach (var item in Model.Cases)
+                    {
+                        <tr>
+                            <td>@item.Title</td>
+                            <td>@item.ArticleOrCategory</td>
+                            <td>@item.Instance</td>
+                            <td>@item.Date.ToString("dd.MM.yyyy")</td>
+                            <td>
+                                <a class="btn btn-outline-danger"
+                                   asp-area="" asp-controller="Case"
+                                   asp-action="AboutCase"
+                                   asp-route-id="@item.Id"
+                                   method="get"
+                                   data-ajax="true"
+                                   data-ajax-update="#main_information"
+                                   data-ajax-mode="replace"
+                                   data-ajax-method="get">
+                                    Подробнее
+                                </a>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
-    </div>*@
+    </div>
 }
-
-

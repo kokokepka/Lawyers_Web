@@ -10,6 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Views\Case\MadeCase.cshtml~RF4408cf.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\lib\bundle.js" />
   </ItemGroup>
 
@@ -27,9 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Other\" />
     <Folder Include="wwwroot\Files\Users\" />
-    <Folder Include="wwwroot\Files\Clients\" />
+    <Folder Include="wwwroot\Files\Cases\" />
   </ItemGroup>
 
   <ItemGroup>

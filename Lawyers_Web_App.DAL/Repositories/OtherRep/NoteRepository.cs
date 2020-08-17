@@ -9,11 +9,11 @@ using System.Text;
 
 namespace Lawyers_Web_App.DAL.Repositories.CaseRep
 {
-    public class NoteRepositity : IRepository<Note>
+    public class NoteRepository : IRepository<Note>
     {
         private readonly LowyersContext db;
 
-        public NoteRepositity(LowyersContext lowyersContext)
+        public NoteRepository(LowyersContext lowyersContext)
         {
             db = lowyersContext;
         }

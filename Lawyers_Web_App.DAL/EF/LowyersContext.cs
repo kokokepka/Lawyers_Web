@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using Lawyers_Web_App.DAL.Entities.AccountEntities;
 using Lawyers_Web_App.DAL.Entities.Cases.Additionally;
+using Lawyers_Web_App.DAL.Entities.Other;
 
 namespace Lawyers_Web_App.DAL.EF
 {
@@ -40,13 +41,15 @@ namespace Lawyers_Web_App.DAL.EF
         public DbSet<Client> Clients { get; set; }
         public DbSet<Role> Roles { get; set; } 
         public DbSet<UserDocument> UserDocuments { get; set; }
-        public DbSet<ClientDocument> ClientDocuments { get; set; }
+        public DbSet<CaseDocument> ClientDocuments { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<Case> Cases { get; set; }
-        public DbSet<Category> Categories { get; set; }
+        //public DbSet<Category> Categories { get; set; }
         public DbSet<Instance> Instances { get; set; }
         public DbSet<KindOfCase> KindOfCases { get; set; }
         public DbSet<RoleInTheCase> RoleInTheCases { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -54,13 +57,12 @@ namespace Lawyers_Web_App.DAL.EF
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<User>().HasOne(u => u.Role).WithMany(r => r.Users)
-                .HasForeignKey(u => u.RoleId).OnDelete(DeleteBehavior.SetNull);
-            modelBuilder.Entity<Case>().HasOne(c => c.User).WithMany(u => u.Cases).HasForeignKey(c => c.UserId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .HasForeignKey(u => u.RoleId);
+            modelBuilder.Entity<Case>().HasOne(c => c.User).WithMany(u => u.Cases).HasForeignKey(c => c.UserId);
             modelBuilder.Entity<UserDocument>().HasOne(u => u.User).WithMany(d => d.Documents)
                 .HasForeignKey(u => u.UserId);
-            modelBuilder.Entity<ClientDocument>().HasOne(c => c.Case).WithMany(d => d.Documents)
-                .HasForeignKey(u => u.CaseId).OnDelete(DeleteBehavior.SetNull);
+            modelBuilder.Entity<CaseDocument>().HasOne(c => c.Case).WithMany(d => d.Documents)
+                .HasForeignKey(u => u.CaseId);
             modelBuilder.Entity<Note>().HasOne(s => s.User).WithMany(u => u.Notes)
                 .HasForeignKey(n => n.UserId).OnDelete(DeleteBehavior.Cascade);
 
@@ -68,22 +70,22 @@ namespace Lawyers_Web_App.DAL.EF
                 .HasForeignKey<Client>(c => c.CaseId).OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<CaseUser>().HasOne(c => c.Client).WithOne(c => c.CaseUser)
-                .HasForeignKey<Client>(c => c.CaseUserId).OnDelete(DeleteBehavior.SetNull);
+                .HasForeignKey<Client>(c => c.CaseUserId);
             modelBuilder.Entity<CaseUser>().HasOne(c => c.Case).WithMany(c => c.Participants)
-                .HasForeignKey(c => c.CaseId).OnDelete(DeleteBehavior.SetNull);
+                .HasForeignKey(c => c.CaseId);
 
-            modelBuilder.Entity<Category>().HasMany(c => c.Сases).WithOne(c => c.Category)
-                .HasForeignKey(c => c.CategoryId)
-                .OnDelete(DeleteBehavior.Cascade);
+            //modelBuilder.Entity<Category>().HasMany(c => c.Сases).WithOne(c => c.Category)
+            //    .HasForeignKey(c => c.CategoryId)
+            //    .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Instance>().HasMany(i => i.Cases).WithOne(c => c.Instance)
-                .HasForeignKey(c => c.InstanceId).OnDelete(DeleteBehavior.SetNull);
+                .HasForeignKey(c => c.InstanceId).OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<KindOfCase>().HasMany(i => i.Cases).WithOne(c => c.KindOfCase)
-                .HasForeignKey(c => c.KindOfCaseId).OnDelete(DeleteBehavior.SetNull);
+                .HasForeignKey(c => c.KindOfCaseId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<RoleInTheCase>().HasMany(i => i.CaseUsers).WithOne(c => c.RoleInTheCase)
-                .HasForeignKey(c => c.RoleInTheCaseId);
+                .HasForeignKey(c => c.RoleInTheCaseId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<RoleInTheCase>().HasOne(r => r.KindOfCase).WithMany(k => k.RoleInTheCases)
-                .HasForeignKey(r => r.KindOfCaseId);
+                .HasForeignKey(r => r.KindOfCaseId).OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<KindOfCaseInstance>()
             .HasKey(k => new { k.KindOfCaseId, k.InstanceId });
@@ -154,14 +156,14 @@ namespace Lawyers_Web_App.DAL.EF
 
             modelBuilder.Entity<RoleInTheCase>().HasData(roleInTheCases);
 
-            Category[] categories = new Category[]
-           {
-                new Category(){Id = 1, Name = "жилищные" },
-                new Category(){Id = 2, Name = "брачно-семейные" },
-                new Category(){Id = 3, Name = "наследственные" },
-                new Category(){Id = 4, Name = "имущественные" },
-           };
-            modelBuilder.Entity<Category>().HasData(categories);
+           // Category[] categories = new Category[]
+           //{
+           //     new Category(){Id = 1, Name = "жилищные" },
+           //     new Category(){Id = 2, Name = "брачно-семейные" },
+           //     new Category(){Id = 3, Name = "наследственные" },
+           //     new Category(){Id = 4, Name = "имущественные" },
+           //};
+            //modelBuilder.Entity<Category>().HasData(categories);
 
             User[] users = new User[]
             {
@@ -176,6 +178,7 @@ namespace Lawyers_Web_App.DAL.EF
                     DateOfBirth = DateTime.Parse("29.08.1969"),
                     Email = "asadchaya.a.s@gmail.com",
                     Phone = "+375(44)747-88-51",
+                    HomePhone = "30-16-86",
                     RoleId = 1                   
                 },
 
@@ -190,6 +193,7 @@ namespace Lawyers_Web_App.DAL.EF
                     DateOfBirth = DateTime.Parse("09.04.1975"),
                     Email = "pivaaa@gmail.com",
                     Phone = "+375(44)695-25-44",
+                    HomePhone = "30-36-86",
                     RoleId = 2
                 }
             };
@@ -205,8 +209,8 @@ namespace Lawyers_Web_App.DAL.EF
                     InstanceId = 1,
                     UserId = 1,
                     Date = DateTime.Now.Date,
-                    Article = "122",
-                    Verdict = "не вынесен"
+                    ArticleOrCategory = "122",
+                    VerdictOrDecision = "не вынесен"
                 },
                 new Case()
                 {
@@ -216,8 +220,8 @@ namespace Lawyers_Web_App.DAL.EF
                     InstanceId = 4,
                     UserId = 1,
                     Date = DateTime.Now.Date,
-                    Article = "255",
-                    Verdict = "не вынесен"
+                    ArticleOrCategory = "255",
+                    VerdictOrDecision = "не вынесен"
                 },
                 new Case()
                 {
@@ -227,8 +231,8 @@ namespace Lawyers_Web_App.DAL.EF
                     InstanceId = 2,
                     UserId = 2,
                     Date = DateTime.Now.Date,
-                    CategoryId = 1,
-                    Verdict = "не вынесен"
+                    ArticleOrCategory = "жилищные",
+                    VerdictOrDecision = "не вынесено"
                 },
             };
             modelBuilder.Entity<Case>().HasData(cases);
@@ -244,6 +248,7 @@ namespace Lawyers_Web_App.DAL.EF
                     DateOfBirth = DateTime.Parse("22.05.1987"),
                     Email = "pup@gmail.com",
                     Phone = "+375(44)695-25-44",
+                    HomePhone = "10-16-86",
                     CaseId = 1,
                     RoleInTheCaseId = 2
                 },
