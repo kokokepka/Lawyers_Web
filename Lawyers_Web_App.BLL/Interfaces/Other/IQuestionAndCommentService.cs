@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Lawyers_Web_App.BLL.DTO.OtherDTO;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Lawyers_Web_App.BLL.Interfaces.Other
 {
-    public interface ICommentService<T> where T : class
+    public interface IQuestionAndCommentService<T> 
+        where T:class
     {
         void Add(T item);
         IEnumerable<T> GetAll();

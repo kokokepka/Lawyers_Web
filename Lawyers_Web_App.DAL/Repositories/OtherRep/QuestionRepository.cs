@@ -31,17 +31,17 @@ namespace Lawyers_Web_App.DAL.Repositories.OtherRep
 
         public IEnumerable<Question> Find(Func<Question, bool> predicate)
         {
-            return db.Questions.Where(predicate).ToList();
+            return db.Questions.Include(q => q.Answers).Where(predicate).ToList();
         }
 
         public Question Get(int? id)
         {
-            return db.Questions.FirstOrDefault(n => n.Id == id);
+            return db.Questions.Include(q => q.Answers).FirstOrDefault(n => n.Id == id);
         }
 
         public IEnumerable<Question> GetAll()
         {
-            return db.Questions;
+            return db.Questions.Include(q => q.Answers);
         }
 
         public void Update(Question item)

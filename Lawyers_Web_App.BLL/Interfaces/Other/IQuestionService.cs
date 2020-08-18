@@ -5,11 +5,9 @@ using System.Text;
 
 namespace Lawyers_Web_App.BLL.Interfaces.Other
 {
-    public interface IQuestionService
+    public interface IQuestionService : ICommentService<QuestionDTO>
     {
-        void AddQuestion(QuestionDTO question);
-        IEnumerable<QuestionDTO> AllQuestions();
-        QuestionDTO GetQuestion(int id);
-        void Delete(int id);
+        void AddAnswer(AnswerDTO answer);
+        IEnumerable<AnswerDTO> GetAnswers(int question);
     }
 }

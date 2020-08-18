@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Lawyers_Web_App.WEB.Models.Users.UserViewModel>
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h3>Наши адвокаты</h3>
+    </div>
+</div>
+
+@foreach (var item in Model)
+{
+    <div class="row justify-content-md-center bg-secondary">
+        <div class="col-md-auto">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        @if (item.Avatar == null || item.Avatar.Length == 0)
+                        {
+                            <img class="card-img rounded-sm img-thumbnail"
+                                 src="~/img/users/photo.png" />
+                        }
+                        else
+                        {
+                            <img src="data:image/jpg;base64,@(Convert.ToBase64String(item.Avatar))"
+                                 class="card-img rounded-sm img-thumbnail" alt="...">
+                        }
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-header">@item.Surname </h5>
+                            <p class="card-text">@item.Name @item.Patronymic</p>
+                            <p class="card-text">Телефон: @item.Phone</p>
+                            <p class="card-text">Почта: @item.Email</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+}

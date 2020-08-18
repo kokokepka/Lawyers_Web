@@ -44,11 +44,11 @@ namespace Lawyers_Web_App.DAL.EF
         public DbSet<CaseDocument> ClientDocuments { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<Case> Cases { get; set; }
-        //public DbSet<Category> Categories { get; set; }
         public DbSet<Instance> Instances { get; set; }
         public DbSet<KindOfCase> KindOfCases { get; set; }
         public DbSet<RoleInTheCase> RoleInTheCases { get; set; }
         public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
 
@@ -73,15 +73,10 @@ namespace Lawyers_Web_App.DAL.EF
                 .HasForeignKey<Client>(c => c.CaseUserId);
             modelBuilder.Entity<CaseUser>().HasOne(c => c.Case).WithMany(c => c.Participants)
                 .HasForeignKey(c => c.CaseId);
-
-            //modelBuilder.Entity<Category>().HasMany(c => c.Сases).WithOne(c => c.Category)
-            //    .HasForeignKey(c => c.CategoryId)
-            //    .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Instance>().HasMany(i => i.Cases).WithOne(c => c.Instance)
                 .HasForeignKey(c => c.InstanceId).OnDelete(DeleteBehavior.Cascade);
-
             modelBuilder.Entity<KindOfCase>().HasMany(i => i.Cases).WithOne(c => c.KindOfCase)
-                .HasForeignKey(c => c.KindOfCaseId).OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(c => c.KindOfCaseId).OnDelete(DeleteBehavior.Cascade);            
             modelBuilder.Entity<RoleInTheCase>().HasMany(i => i.CaseUsers).WithOne(c => c.RoleInTheCase)
                 .HasForeignKey(c => c.RoleInTheCaseId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<RoleInTheCase>().HasOne(r => r.KindOfCase).WithMany(k => k.RoleInTheCases)
@@ -99,6 +94,9 @@ namespace Lawyers_Web_App.DAL.EF
                 .HasOne(i => i.Instance)
                 .WithMany(ki => ki.KindOfCaseInstances)
                 .HasForeignKey(i => i.InstanceId);
+
+            modelBuilder.Entity<Question>().HasMany(q => q.Answers)
+                .WithOne(a => a.Question).HasForeignKey(a => a.QuestionId).OnDelete(DeleteBehavior.Cascade);
 
             Role[] roles = new Role[]
             {
@@ -155,15 +153,6 @@ namespace Lawyers_Web_App.DAL.EF
             };
 
             modelBuilder.Entity<RoleInTheCase>().HasData(roleInTheCases);
-
-           // Category[] categories = new Category[]
-           //{
-           //     new Category(){Id = 1, Name = "жилищные" },
-           //     new Category(){Id = 2, Name = "брачно-семейные" },
-           //     new Category(){Id = 3, Name = "наследственные" },
-           //     new Category(){Id = 4, Name = "имущественные" },
-           //};
-            //modelBuilder.Entity<Category>().HasData(categories);
 
             User[] users = new User[]
             {

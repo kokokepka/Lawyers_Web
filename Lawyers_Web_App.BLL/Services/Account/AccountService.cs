@@ -148,5 +148,24 @@ namespace Lawyers_Web_App.BLL.Services
                 throw new ValidationException("Пользователь не найден!", "");
             }
         }
+
+        public IEnumerable<UserDTO> GetAllUsers()
+        {
+            IEnumerable<User> lowyers = _database.Users.GetAll();
+            IList<UserDTO> users = new List<UserDTO>();
+            foreach (User item in lowyers)
+            {
+                users.Add(new UserDTO
+                {
+                    Name = item.Name,
+                    Surname = item.Surname,
+                    Patronymic = item.Patronymic,
+                    Email = item.Email,
+                    Phone = item.Phone,
+                    Avatar = item.Avatar
+                });
+            }
+            return users;
+        }
     }
 }

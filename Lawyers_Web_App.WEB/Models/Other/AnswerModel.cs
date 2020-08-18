@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Lawyers_Web_App.BLL.DTO.OtherDTO
+namespace Lawyers_Web_App.WEB.Models.Other
 {
-    public class CommentDTO
+    public class AnswerModel
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public int QuestionId { get; set; }
         public string Text { get; set; }
         public DateTime DateTime { get; set; }
     }

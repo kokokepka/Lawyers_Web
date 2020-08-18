@@ -27,6 +27,7 @@ namespace Lawyers_Web_App.DAL.Interfaces
         IRepository<Instance> Instances { get; }
         IRepository<RoleInTheCase> CaseRoles { get; }
         IRepository<Question> Questions { get; }
+        IRepository<Answer> Answers { get; }
         IRepository<Comment> Comments { get; }
         void Save();
     }

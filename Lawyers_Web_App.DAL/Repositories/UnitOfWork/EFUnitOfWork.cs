@@ -28,12 +28,12 @@ namespace Lawyers_Web_App.DAL.Repositories
         private ClientDocumentRepository _clientDocumentRepository;
         private NoteRepository _noteRepositity;
         private CaseRepository _caseRepositoty;
-        //private CategoriesRepository _categoryRepository;
         private InstanceRepository _instanceRepository;
         private KindOfCaseRepository _kindOfCaseRepository;
         private RoleInTheCaseRepository _roleInTheCaseRepository;
         private QuestionRepository _questionRepository;
         private CommentRepository _commentRepository;
+        private AnswerRepository _answerRepository;
 
 
         public EFUnitOfWork()
@@ -57,8 +57,6 @@ namespace Lawyers_Web_App.DAL.Repositories
 
         public IRepository<Client> Clients => _clientProfileRepository ?? new ClientRepository(db);
 
-        //public IRepository<Category> Categories => _categoryRepository ?? new CategoriesRepository(db);
-
         public IRepository<KindOfCase> KindOfCases => _kindOfCaseRepository ?? new KindOfCaseRepository(db);
 
         public IRepository<Instance> Instances => _instanceRepository ?? new InstanceRepository(db);
@@ -68,6 +66,8 @@ namespace Lawyers_Web_App.DAL.Repositories
         public IRepository<Question> Questions => _questionRepository ?? new QuestionRepository(db);
 
         public IRepository<Comment> Comments => _commentRepository ?? new CommentRepository(db);
+
+        public IRepository<Answer> Answers => _answerRepository ?? new AnswerRepository(db);
 
         private bool disposed = false;
 

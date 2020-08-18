@@ -18,6 +18,7 @@ using Lawyers_Web_App.BLL.Services.Documents;
 using Lawyers_Web_App.BLL.DTO.CasesDTO;
 using Lawyers_Web_App.BLL.Interfaces.Cases;
 using Lawyers_Web_App.BLL.Services.Cases;
+using Lawyers_Web_App.BLL.Services.Other;
 
 namespace Lawyers_Web_App.BLL.Infrastructure
 {
@@ -33,6 +34,8 @@ namespace Lawyers_Web_App.BLL.Infrastructure
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<INoteService, NoteService>();
             services.AddScoped<ICaseService, CaseService>();
+            services.AddScoped<IQuestionService, QuestionService>();
+            services.AddScoped<ICommentService<CommentDTO>, CommentService>();
             services.AddScoped<IUnitOfWork, EFUnitOfWork>();
             return services;
         }

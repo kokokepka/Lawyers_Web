@@ -12,7 +12,7 @@ using Lawyers_Web_App.DAL.Entities.AccountEntities;
 using Lawyers_Web_App.DAL.Entities.Cases;
 using Lawyers_Web_App.DAL.Entities.Cases.Additionally;
 using Lawyers_Web_App.DAL.Entities.Documents;
-
+using Lawyers_Web_App.DAL.Entities.Other;
 using Lawyers_Web_App.DAL.Entities.UserEntities;
 
 namespace Lawyers_Web_App.BLL.Mappers
@@ -47,6 +47,9 @@ namespace Lawyers_Web_App.BLL.Mappers
                 CreateMap<RoleInTheCase, RoleCaseDTO>().ReverseMap();
                 CreateMap<Instance, InstanceDTO>().ReverseMap();
                 CreateMap<KindOfCase, KindOfCaseDTO>().ReverseMap();
+                CreateMap<Question, QuestionDTO>().ReverseMap();
+                CreateMap<Comment, CommentDTO>().ReverseMap();
+                CreateMap<Answer, AnswerDTO>().ReverseMap();
                 //CreateMap<Case, CaseDTO>().ReverseMap().AfterMap((_case, caseDto) => _case.Instance = caseDto.Instance.Name)
                 //    .ForPath(c => c.Category.Name, cd => cd.MapFrom(src => src.Category))
                 //    //.ForPath(c => c.Instance.Name, cd => cd.MapFrom(src => src.Instance))

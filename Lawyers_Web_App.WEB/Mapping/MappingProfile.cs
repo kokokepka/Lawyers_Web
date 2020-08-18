@@ -35,6 +35,8 @@ namespace Lawyers_Web_App.WEB.Mapping
             CreateMap<NoteDTO, NoteViewModel>();
             CreateMap<KindOfCaseDTO, KindOfCaseModel>();
             CreateMap<InstanceDTO, InstanceModel>();
+            CreateMap<QuestionDTO, QuestionViewModel>();
+            CreateMap<CommentDTO, CommentViewModel>();
         }
     }
 }

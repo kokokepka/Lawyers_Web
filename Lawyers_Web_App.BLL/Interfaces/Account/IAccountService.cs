@@ -16,6 +16,7 @@ namespace Lawyers_Web_App.BLL.Interfaces
         void AddUserDocument(int userId, UserDocDTO userDoc);
         UserDocDTO GetUserDocument(int docId);
         IEnumerable<UserDocDTO> GetUserDocuments(int userId);
+        IEnumerable<UserDTO> GetAllUsers();
         void Delete(int userId);
         void Dispose();
     }

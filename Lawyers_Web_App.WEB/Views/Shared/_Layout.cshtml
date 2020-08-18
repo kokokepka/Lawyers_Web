@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -32,15 +32,25 @@
                             <li class="nav-item">
                                 <a class="nav-link text-light my_link" asp-area="" asp-controller="Account" asp-action="PrivateOffice">Личный кабинет</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light my_link" asp-area="" asp-controller="Home" asp-action="AskQuestion">Новости</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light my_link" asp-area="" asp-controller="Home" asp-action="AllLowyers">Наши адвокаты</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light my_link" asp-area="" asp-controller="Home" asp-action="Price">Прайс</a>
+                            </li>
+
                         }
                         <li class="nav-item">
-                            <a class="nav-link text-light my_link" asp-area="" asp-controller="Home" asp-action="Privacy">Наши адвокаты</a>
+                            <a class="nav-link text-light my_link" asp-area="" asp-controller="Home" asp-action="AllQuestions">Вопрос/Ответ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light my_link" asp-area="" asp-controller="Home" asp-action="Privacy">Задать вопрос</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light my_link" asp-area="" asp-controller="Home" asp-action="Privacy">Прайс</a>
+                            <a class="nav-link text-light my_link" asp-area="" asp-controller="Home" asp-action="AllComments">Отзывы</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light my_link" asp-area="" asp-controller="Home" asp-action="Privacy">Контакты</a>
