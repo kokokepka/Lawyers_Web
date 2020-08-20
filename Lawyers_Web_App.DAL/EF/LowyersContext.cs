@@ -14,7 +14,7 @@ using Lawyers_Web_App.DAL.Entities.Other;
 namespace Lawyers_Web_App.DAL.EF
 {
     // Класс контекста данных
-    public class LowyersContext:DbContext
+    public class LowyersContext : DbContext
     {
         public class OptionsBuild
         {
@@ -39,7 +39,7 @@ namespace Lawyers_Web_App.DAL.EF
         public DbSet<User> Users { get; set; }
         public DbSet<CaseUser> CaseUsers { get; set; }
         public DbSet<Client> Clients { get; set; }
-        public DbSet<Role> Roles { get; set; } 
+        public DbSet<Role> Roles { get; set; }
         public DbSet<UserDocument> UserDocuments { get; set; }
         public DbSet<CaseDocument> ClientDocuments { get; set; }
         public DbSet<Note> Notes { get; set; }
@@ -50,33 +50,37 @@ namespace Lawyers_Web_App.DAL.EF
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Price> Prices { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
             modelBuilder.Entity<User>().HasOne(u => u.Role).WithMany(r => r.Users)
-                .HasForeignKey(u => u.RoleId);
-            modelBuilder.Entity<Case>().HasOne(c => c.User).WithMany(u => u.Cases).HasForeignKey(c => c.UserId);
-            modelBuilder.Entity<UserDocument>().HasOne(u => u.User).WithMany(d => d.Documents)
-                .HasForeignKey(u => u.UserId);
-            modelBuilder.Entity<CaseDocument>().HasOne(c => c.Case).WithMany(d => d.Documents)
-                .HasForeignKey(u => u.CaseId);
-            modelBuilder.Entity<Note>().HasOne(s => s.User).WithMany(u => u.Notes)
-                .HasForeignKey(n => n.UserId).OnDelete(DeleteBehavior.Cascade);
+               .HasForeignKey(u => u.RoleId);
+            modelBuilder.Entity<User>().HasMany(u => u.Cases).WithOne(c => c.User).HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<User>().HasMany(u => u.Documents).WithOne(d => d.User).HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<User>().HasMany(u => u.Notes).WithOne(n => n.User).HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<User>().HasOne(u => u.Schedule).WithMany(s => s.Users).HasForeignKey(u => u.ScheduleId);
+            modelBuilder.Entity<Case>().HasMany(c => c.Documents).WithOne(d => d.Case)
+                .HasForeignKey(u => u.CaseId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<CaseUser>().HasOne(c => c.Case).WithMany(c => c.Participants)
+                .HasForeignKey(c => c.CaseId);
 
             modelBuilder.Entity<Case>().HasOne(c => c.Client).WithOne(cu => cu.Case)
                 .HasForeignKey<Client>(c => c.CaseId).OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<CaseUser>().HasOne(c => c.Client).WithOne(c => c.CaseUser)
                 .HasForeignKey<Client>(c => c.CaseUserId);
-            modelBuilder.Entity<CaseUser>().HasOne(c => c.Case).WithMany(c => c.Participants)
-                .HasForeignKey(c => c.CaseId);
+
             modelBuilder.Entity<Instance>().HasMany(i => i.Cases).WithOne(c => c.Instance)
                 .HasForeignKey(c => c.InstanceId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<KindOfCase>().HasMany(i => i.Cases).WithOne(c => c.KindOfCase)
-                .HasForeignKey(c => c.KindOfCaseId).OnDelete(DeleteBehavior.Cascade);            
+                .HasForeignKey(c => c.KindOfCaseId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<RoleInTheCase>().HasMany(i => i.CaseUsers).WithOne(c => c.RoleInTheCase)
                 .HasForeignKey(c => c.RoleInTheCaseId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<RoleInTheCase>().HasOne(r => r.KindOfCase).WithMany(k => k.RoleInTheCases)
@@ -120,7 +124,7 @@ namespace Lawyers_Web_App.DAL.EF
                 new Instance(){Id = 4, Name = "областной суд"},
                 new Instance(){Id = 5, Name = "верховный суд"},
             };
-            
+
             KindOfCaseInstance[] kindOfCaseInstances = new KindOfCaseInstance[]
             {
                 new KindOfCaseInstance { InstanceId = instances[0].Id, KindOfCaseId = kindOfCases[0].Id },
@@ -133,12 +137,12 @@ namespace Lawyers_Web_App.DAL.EF
                 new KindOfCaseInstance { InstanceId = instances[3].Id, KindOfCaseId = kindOfCases[2].Id },
                 new KindOfCaseInstance { InstanceId = instances[4].Id, KindOfCaseId = kindOfCases[2].Id }
             };
-            modelBuilder.Entity<KindOfCase>().HasData(kindOfCases);                               
+            modelBuilder.Entity<KindOfCase>().HasData(kindOfCases);
             modelBuilder.Entity<Instance>().HasData(instances);
             modelBuilder.Entity<KindOfCaseInstance>().HasData(kindOfCaseInstances);
 
 
-           
+
             RoleInTheCase[] roleInTheCases = new RoleInTheCase[]
             {
                 new RoleInTheCase(){Id = 1, Name = "Обвиняемый", KindOfCaseId = 1},
@@ -154,6 +158,91 @@ namespace Lawyers_Web_App.DAL.EF
 
             modelBuilder.Entity<RoleInTheCase>().HasData(roleInTheCases);
 
+            Schedule[] schedules = new Schedule[]
+            {
+                new Schedule()
+                {
+                    Id = 1,
+                    DayOfWeek = DayOfWeek.Monday
+                },
+                new Schedule()
+                {
+                    Id = 2,
+                    DayOfWeek = DayOfWeek.Tuesday
+                },
+                new Schedule()
+                {
+                    Id = 3,
+                    DayOfWeek = DayOfWeek.Wednesday
+                },
+                new Schedule()
+                {
+                    Id = 4,
+                    DayOfWeek = DayOfWeek.Thursday
+                },
+                new Schedule()
+                {
+                    Id = 5,
+                    DayOfWeek = DayOfWeek.Friday
+                }
+            };
+            modelBuilder.Entity<Schedule>().HasData(schedules);
+
+            Price[] prices = new Price[]
+            {
+                new Price
+                {
+                    Id = 1, ForWhat = "2.1 Консультация, совет, " +
+                    "не требующие ознакомления с документами, от двух до пяти базовых величин ", 
+                    StartSum = 54.00, FinishSum = 135.00
+                },
+                new Price
+                {
+                    Id = 2, ForWhat = "2.2 Консультация, совет, требующие ознакомления с документами, " +
+                    "либо представляющие сложность, от трех до десяти базовых величин ", 
+                    StartSum = 81.00, FinishSum = 270.00
+                },
+                new Price
+                {
+                    Id = 3, ForWhat = "2.3 Составление правовых документов – от трех до пятнадцати базовых величин", 
+                    StartSum = 81.00, FinishSum = 405.00
+                },
+                new Price
+                {
+                    Id = 4, ForWhat = "2.4 Составление сложных правовых документов, " +
+                    "в том числе связанных с истребованием адвокатами дополнительных материалов " +
+                    "и (или) ознакомлением с дополнительными материалами  - от восьми  до двадцати базовых величин",
+                    StartSum = 216.00, FinishSum = 540.00
+                },
+                new Price
+                {
+                    Id = 5, ForWhat = "2.5 Один день участия адвоката в предварительном следствии, " +
+                    "дознании и в судах первой инстанции при ведении уголовных, административных " +
+                    "и гражданских дел, в том числе изучение материалов дела, подготовка к ведению дела, " +
+                    "посещение в местах лишения свободы, изучение протокола судебного заседания,  " +
+                    "составление замечаний на протокол судебного заседания, составление кассационной жалобы," +
+                    " - от восьми  до пятнадцати базовых величин "
+                    , StartSum = 216.00, FinishSum = 405.00
+                },
+                new Price
+                {
+                    Id = 6, ForWhat = "2.6 При сложности дела, а также по делам, связанным с выездом адвоката в командировку, " +
+                    "- от десяти до двадцати  базовых величин "
+                    , StartSum = 270.00, FinishSum = 540.00
+                },
+                new Price
+                {
+                    Id = 7, ForWhat = "2.7 Иные виды юридической помощи " +
+                    "(участие в переговорах, подача адвокатского запроса и получение6 ответа на запрос, " +
+                    "представление интересов в государственных и иных органах и организациях) – " +
+                    "от пяти до двадцати базовых величин ", StartSum = 135.00, FinishSum = 540.00
+                },
+                new Price
+                {
+                    Id = 8, ForWhat = "Базовая величина исчислена на 1 января 2020 года в размере ", StartSum = 27.00, FinishSum = 27.00
+                }
+            };
+
             User[] users = new User[]
             {
                 new User()
@@ -168,7 +257,9 @@ namespace Lawyers_Web_App.DAL.EF
                     Email = "asadchaya.a.s@gmail.com",
                     Phone = "+375(44)747-88-51",
                     HomePhone = "30-16-86",
-                    RoleId = 1                   
+                    RoleId = 1,
+                    Address = "Чечерская 17",
+                    ScheduleId = 1
                 },
 
                 new User()
@@ -183,7 +274,9 @@ namespace Lawyers_Web_App.DAL.EF
                     Email = "pivaaa@gmail.com",
                     Phone = "+375(44)695-25-44",
                     HomePhone = "30-36-86",
-                    RoleId = 2
+                    RoleId = 2,
+                    Address = "Пушкина 7",
+                    ScheduleId = 2
                 }
             };
             modelBuilder.Entity<User>().HasData(users);

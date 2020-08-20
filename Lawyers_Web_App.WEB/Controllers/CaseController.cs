@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using AutoMapper;
 using Lawyers_Web_App.BLL.DTO;
@@ -140,6 +141,14 @@ namespace Lawyers_Web_App.WEB.Controllers
         }
 
         [HttpGet]
+        public IActionResult DeleteCase(int user_id, int case_id, string kind_case_)
+        {
+            _caseService.DeleteCase(case_id);
+            return RedirectToAction("MyCases", "Case", new { id = user_id, kind_case = kind_case_ });
+        }
+
+
+        [HttpGet]
         public IActionResult MyCriminalCases(int id)
         {
             try
@@ -242,7 +251,7 @@ namespace Lawyers_Web_App.WEB.Controllers
                     return RedirectToAction("AboutCase","Case", new { id = model.SomethingId });
                 }
             }
-            return RedirectToAction("Index", "Home");
+            return PartialView(model);
         }
 
         [HttpGet]
@@ -264,7 +273,7 @@ namespace Lawyers_Web_App.WEB.Controllers
             {
                 System.IO.File.Delete(_webHostEnvironment.WebRootPath + path);
             }
-            _caseService.Delete(id);
+            _caseService.DeleteDoc(id);
             return RedirectToAction("AboutCase", "Case", new { id = caseid });
         }
 
@@ -323,5 +332,16 @@ namespace Lawyers_Web_App.WEB.Controllers
                 };
             }
         }
+        //[HttpGet]
+        //public IActionResult Search(string search)
+        //{
+        //    string login = User.Identity.Name;
+        //    if (login != null)
+        //    {
+        //        UserDTO user = _accountService.GetUser(login);
+        //        CaseDTO cases = _caseService.
+        //        return PartialView(model);
+        //    }
+        //}
     }
 }

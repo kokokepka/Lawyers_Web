@@ -65,7 +65,11 @@ namespace Lawyers_Web_App.BLL.Services
 
         public void DeleteNote(int id)
         {
-            _database.Notes.Delete(id);
+            Note note = _database.Notes.Get(id);
+            if (note == null)
+                throw new ValidationException("Запись не найдена", "");
+            _database.Notes.Delete(note.Id);
+            _database.Save();
         }
 
         public IEnumerable<NoteDTO> GetUserNotes(int userId)

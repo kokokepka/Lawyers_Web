@@ -4,7 +4,7 @@
 }
 <div class="row justify-content-center">
     <div class="col-md-auto">
-        <h4>Вопросы</h4>
+        <h4>Вопрос/Ответ</h4>
     </div>
 </div>
 @if (Model.Count() != 0)
@@ -15,16 +15,29 @@
             <div class="col-md-8  offset-md-2">
                 <div class="card w-75">
                     <div class="card-body">
-                        <h5 class="card-header">От @item.Name</h5>
+                        <h5 class="card-header">Вопрос от @item.Name</h5>
                         <p class="card-body">@item.Text</p>
                         <p class="card-footer">@item.DateTime.ToString()</p>
                         @if (User.Identity.IsAuthenticated && User.IsInRole("main-lawyer"))
                         {
-                            <a asp-action="AnswerTheQuestion" asp-controller="Home" asp-route-id="@item.Id" class="btn btn-danger">Ответить</a>
-                            <a asp-action="DeleteComment" asp-controller="Home" asp-route-id="@item.Id" class="btn btn-danger">Удалить</a>
+                            <a asp-action="AnswerTheQuestion"
+                               asp-controller="Home" asp-route-id="@item.Id" 
+                               class="btn btn-primary"
+                               data-ajax="true"
+                               data-ajax-update="#addAnswer"
+                               data-ajax-mode="replace"
+                               data-ajax-method="get">Ответить</a>
+
+                            <a asp-action="DeleteQestion" asp-controller="Home" 
+                               asp-route-id="@item.Id" class="btn btn-danger">Удалить</a>
                         }
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 offset-md-3" id="addAnswer">
+               
             </div>
         </div>
         @if (item.Answers != null)
@@ -35,12 +48,12 @@
                     <div class="col-md-8  offset-md-3">
                         <div class="card w-75">
                             <div class="card-body">
-                                <h5 class="card-header">Ответ: </h5>
-                                <p class="card-body">@ans.Answer</p>
+                                <h5 class="card-header">Ответ на вопрос @item.Name</h5>
+                                <p class="card-body">@ans.Text</p>
                                 <p class="card-footer">@ans.DateTime.ToString()</p>
                                 @if (User.Identity.IsAuthenticated && User.IsInRole("main-lawyer"))
                                 {
-                                    <a asp-action="DeleteComment" asp-controller="Home" asp-route-id="@item.Id" class="btn btn-danger">Удалить</a>
+                                    <a asp-action="DeleteAnswer" asp-controller="Home" asp-route-id="@ans.Id" class="btn btn-danger">Удалить</a>
                                 }
                             </div>
                         </div>

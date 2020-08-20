@@ -60,9 +60,17 @@ namespace Lawyers_Web_App.WEB.Controllers
         [HttpGet]
         public IActionResult AllLowyers()
         {
-            IEnumerable<UserDTO> users = _accountService.GetAllUsers();
-            var map = _mapper.Map<IEnumerable<UserViewModel>>(users);
-            return View(map);
+            try
+            {
+                IEnumerable<UserDTO> users = _accountService.GetAllUsers();
+                var map = _mapper.Map<IEnumerable<UserViewModel>>(users);
+                return View(map);
+            }
+            catch(ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }           
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -72,16 +80,25 @@ namespace Lawyers_Web_App.WEB.Controllers
         }
         [HttpPost]
         public IActionResult AskQuestion(QuestionViewModel model)
-        {
+        {         
             if (ModelState.IsValid)
             {
-                QuestionDTO questionDTO = new QuestionDTO
+                try
                 {
-                    Name = model.Name,
-                    Text = model.Text
-                };
-                _questionService.Add(questionDTO);
-                return RedirectToAction("AllQuestions", "Home");
+                    QuestionDTO questionDTO = new QuestionDTO
+                    {
+                        Name = model.Name,
+                        Text = model.Text
+                    };
+                    _questionService.Add(questionDTO);
+                    return RedirectToAction("AllQuestions", "Home");
+                }
+                catch (ValidationException ex)
+                {
+                    ModelState.AddModelError(ex.Property, ex.Message);
+                }
+                return RedirectToAction("Index", "Home");
+               
             }
             return View(model);
         }
@@ -89,26 +106,42 @@ namespace Lawyers_Web_App.WEB.Controllers
         [HttpGet]
         public IActionResult AllQuestions()
         {
-            IEnumerable<QuestionDTO> questions = _questionService.GetAll();
-            var map = _mapper.Map<IEnumerable<QuestionViewModel>>(questions);
-            foreach(var item in map)
+            try
             {
-                var tmp_answer = _questionService.GetAnswers(item.Id);
-                if (tmp_answer.Count() > 0)
+                IEnumerable<QuestionDTO> questions = _questionService.GetAll();
+                var map = _mapper.Map<IEnumerable<QuestionViewModel>>(questions);
+                foreach (var item in map)
                 {
-                    var answers = _mapper.Map<IEnumerable<AnswerModel>>(tmp_answer);
-                    item.Answers = answers;
-                }               
+                    var tmp_answer = _questionService.GetAnswers(item.Id);
+                    if (tmp_answer.Count() > 0)
+                    {
+                        var answers = _mapper.Map<IEnumerable<AnswerModel>>(tmp_answer);
+                        item.Answers = answers;
+                    }
+                }
+                return View(map);
             }
-            return View(map);
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }
+            return RedirectToAction("Index", "Home");      
         }
 
         [HttpGet] 
         public IActionResult AllComments()
         {
-            IEnumerable<CommentDTO> comments = _commentService.GetAll();
-            var map = _mapper.Map<IEnumerable<CommentViewModel>>(comments);
-            return View(map);
+            try
+            {
+                IEnumerable<CommentDTO> comments = _commentService.GetAll();
+                var map = _mapper.Map<IEnumerable<CommentViewModel>>(comments);
+                return View(map);
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }
+            return RedirectToAction("Index", "Home");           
         }
 
         [HttpGet]
@@ -121,21 +154,30 @@ namespace Lawyers_Web_App.WEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.Text != null && model.Text.Length > 0) 
+                try
                 {
-                    string name;
-                    if (model.Name == null || model.Name.Length <= 0)
-                        name = "Гость";
-                    else
-                        name = model.Name;
-                    _commentService.Add(new CommentDTO
+                    if (model.Text != null && model.Text.Length > 0)
                     {
-                        Name = name,
-                        Text = model.Text,
-                        DateTime = DateTime.Now
-                    });
+                        string name;
+                        if (model.Name == null || model.Name.Length <= 0)
+                            name = "Гость";
+                        else
+                            name = model.Name;
+                        _commentService.Add(new CommentDTO
+                        {
+                            Name = name,
+                            Text = model.Text,
+                            DateTime = DateTime.Now
+                        });
+                    }
+                    return RedirectToAction("AllComments", "Home");
                 }
-                return RedirectToAction("AllComments", "Home");
+                catch (ValidationException ex)
+                {
+                    ModelState.AddModelError(ex.Property, ex.Message);
+                }
+                return RedirectToAction("Index", "Home");
+               
             }
             return PartialView(model);
         }
@@ -143,25 +185,56 @@ namespace Lawyers_Web_App.WEB.Controllers
         [HttpGet]
         public IActionResult DeleteComment(int id)
         {
-            CommentDTO comment = _commentService.Get(id);
-            if (comment != null)
-                _commentService.Delete(comment.Id);
-            return RedirectToAction("AllComments", "Home");
+            try
+            {
+                CommentDTO comment = _commentService.Get(id);
+                if (comment != null)
+                    _commentService.Delete(comment.Id);
+                return RedirectToAction("AllComments", "Home");
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }
+            return RedirectToAction("Index", "Home");
+          
         }
 
         [HttpGet]
         public IActionResult DeleteQestion(int id)
         {
-            QuestionDTO question = _questionService.Get(id);
-            if (question != null)
-                _questionService.Delete(question.Id);
-            return RedirectToAction("AllQuestions", "Home");
+            try
+            {
+                QuestionDTO question = _questionService.Get(id);
+                if (question != null)
+                    _questionService.Delete(question.Id);
+                return RedirectToAction("AllQuestions", "Home");
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }
+            return RedirectToAction("Index", "Home");           
         }
 
         [HttpGet]
         public IActionResult AnswerTheQuestion(int id)
         {
-            return PartialView();
+            try
+            {
+                QuestionDTO question = _questionService.Get(id);
+                if (question != null)
+                {
+                    AnswerModel answer = new AnswerModel { QuestionId = question.Id };
+                    return PartialView(answer);
+                }
+                return RedirectToAction("AllQuestions", "Home");
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }
+            return RedirectToAction("AllQuestions", "Home");
         }
 
         [HttpPost]
@@ -169,24 +242,39 @@ namespace Lawyers_Web_App.WEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                AnswerDTO answer = new AnswerDTO
+                try
                 {
-                    Text = model.Text,
-                    QuestionId = model.QuestionId
-                };
-                _questionService.AddAnswer(answer);
-                return RedirectToAction("AllQuestions", "Home");
+                    AnswerDTO answer = new AnswerDTO
+                    {
+                        Text = model.Text,
+                        QuestionId = model.QuestionId
+                    };
+                    _questionService.AddAnswer(answer);
+                    return RedirectToAction("AllQuestions", "Home");
+                }
+                catch (ValidationException ex)
+                {
+                    ModelState.AddModelError(ex.Property, ex.Message);                    
+                }                    
             }
             return PartialView(model);
         }
 
-        //[HttpGet]
-        //public IActionResult DeleteAnswer(int id)
-        //{
-        //    AnswerDTO question = _questionService.Get(id);
-        //    if (question != null)
-        //        _questionService.Delete(question.Id);
-        //    return RedirectToAction("AllQuestions", "Home");
-        //}
+        [HttpGet]
+        public IActionResult DeleteAnswer(int id)
+        {
+            try
+            {
+                AnswerDTO answer = _questionService.GetOneAnswer(id);
+                if (answer != null)
+                    _questionService.DeleteAnswer(id);
+                return RedirectToAction("AllQuestions", "Home");
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+                return RedirectToAction("Index", "Home");
+            }          
+        }
     }
 }

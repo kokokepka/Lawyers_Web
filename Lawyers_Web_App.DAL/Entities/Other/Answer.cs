@@ -9,6 +9,7 @@ namespace Lawyers_Web_App.DAL.Entities.Other
     {
         [Key]
         public int Id { get; set; }
+        [MaxLength(1000)]
         public string Text { get; set; }
         public DateTime DateTime { get; set; }
         public int QuestionId { get; set; }

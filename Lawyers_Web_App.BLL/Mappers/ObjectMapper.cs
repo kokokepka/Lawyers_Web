@@ -38,8 +38,8 @@ namespace Lawyers_Web_App.BLL.Mappers
             public DtoMapper()
             {
                 CreateMap<User, UserDTO>().ReverseMap();
-                //CreateMap<CaseUser, CaseUserDTO>().ReverseMap()
-                //    .For(c => c.RoleInTheCase.Name, cd => cd.MapFrom(src => src.RoleInTheCase));
+                //CreateMap<CaseUserDTO, CaseUser>()
+                //    .ForPath(c => c.RoleInTheCase.Name, cd => cd.MapFrom(src => src.RoleInTheCase)).ReverseMap();
                 CreateMap<UserDocument, UserDocDTO>().ReverseMap();
                 CreateMap<Client, ClientDTO>().ReverseMap();
                 CreateMap<CaseDocument, CaseDocDTO>().ReverseMap();
@@ -49,11 +49,7 @@ namespace Lawyers_Web_App.BLL.Mappers
                 CreateMap<KindOfCase, KindOfCaseDTO>().ReverseMap();
                 CreateMap<Question, QuestionDTO>().ReverseMap();
                 CreateMap<Comment, CommentDTO>().ReverseMap();
-                CreateMap<Answer, AnswerDTO>().ReverseMap();
-                //CreateMap<Case, CaseDTO>().ReverseMap().AfterMap((_case, caseDto) => _case.Instance = caseDto.Instance.Name)
-                //    .ForPath(c => c.Category.Name, cd => cd.MapFrom(src => src.Category))
-                //    //.ForPath(c => c.Instance.Name, cd => cd.MapFrom(src => src.Instance))
-                //    .ForPath(c => c.KindOfCase.Name, cd => cd.MapFrom(src => src.KindOfCase));
+                CreateMap<Answer, AnswerDTO>().ReverseMap();              
             }
         }
     }

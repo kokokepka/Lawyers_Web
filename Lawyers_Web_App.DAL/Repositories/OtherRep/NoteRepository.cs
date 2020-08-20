@@ -12,7 +12,6 @@ namespace Lawyers_Web_App.DAL.Repositories.CaseRep
     public class NoteRepository : IRepository<Note>
     {
         private readonly LowyersContext db;
-
         public NoteRepository(LowyersContext lowyersContext)
         {
             db = lowyersContext;

@@ -37,8 +37,14 @@ else
                 <h6 class="card-subtitle mb-2 text-muted">Подзаголовок карты</h6>
                 <p class="card-text">@item.Text</p>
                 @*<a href="#" class="card-link">Ссылка карты</a>*@
-                <a asp-action="DeleteNote" asp-controller="Case" class="card-link"
-                   asp-route-id="@item.Id">Удалить</a>
+                <a asp-action="DeleteNote" asp-controller="Other" class="card-link"
+                   asp-route-id="@item.Id"
+                   asp-route-user_id="@item.UserId"
+                   method="get"
+                   data-ajax="true"
+                   data-ajax-update="#main_information"
+                   data-ajax-mode="replace"
+                   data-ajax-method="get">Удалить</a>
             </div>
         </div>
     }

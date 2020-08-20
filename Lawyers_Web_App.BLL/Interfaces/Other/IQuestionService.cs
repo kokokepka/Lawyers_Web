@@ -9,5 +9,7 @@ namespace Lawyers_Web_App.BLL.Interfaces.Other
     {
         void AddAnswer(AnswerDTO answer);
         IEnumerable<AnswerDTO> GetAnswers(int question);
+        AnswerDTO GetOneAnswer(int id);
+        void DeleteAnswer(int id);
     }
 }

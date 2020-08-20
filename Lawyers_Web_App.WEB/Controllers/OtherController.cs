@@ -12,6 +12,7 @@ using Lawyers_Web_App.BLL.Interfaces.Other;
 using Lawyers_Web_App.WEB.Models;
 using Lawyers_Web_App.WEB.Models.Other;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Lawyers_Web_App.WEB.Controllers
 {
@@ -70,7 +71,7 @@ namespace Lawyers_Web_App.WEB.Controllers
                         Time = model.Time,
                         UserId = model.UserId
                     });
-                    return RedirectToAction("AddNodeMessage", "Other");
+                    return RedirectToAction("MyNotes", "Other", new { userId = model.UserId});
                 }
                 catch (ValidationException ex)
                 {
@@ -97,11 +98,11 @@ namespace Lawyers_Web_App.WEB.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpPost]
-        public IActionResult DeleteNote(int id)
+        [HttpGet]
+        public IActionResult DeleteNote(int id, int user_id)
         {
             _noteService.DeleteNote(id);
-            return View();
+            return RedirectToAction("MyNotes", "Other", new { userId = user_id });
         }
     }
 }

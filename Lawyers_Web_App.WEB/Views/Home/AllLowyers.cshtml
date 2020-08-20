@@ -1,27 +1,25 @@
 ﻿@model IEnumerable<Lawyers_Web_App.WEB.Models.Users.UserViewModel>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3>Наши адвокаты</h3>
+            </div>
+        </div>
 
-<div class="row">
-    <div class="col-md-12 text-center">
-        <h3>Наши адвокаты</h3>
-    </div>
-</div>
-
-@foreach (var item in Model)
-{
-    <div class="row justify-content-md-center bg-secondary">
-        <div class="col-md-auto">
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row no-gutters">
+        @foreach (var item in Model)
+        {
+            <div class="card mb-3" style="max-width: 500px;">
+                <div class="row no-gutters justify-content-center">
                     <div class="col-md-4">
                         @if (item.Avatar == null || item.Avatar.Length == 0)
                         {
-                            <img class="card-img rounded-sm img-thumbnail"
+                            <img class="card-img"
                                  src="~/img/users/photo.png" />
                         }
                         else
                         {
                             <img src="data:image/jpg;base64,@(Convert.ToBase64String(item.Avatar))"
-                                 class="card-img rounded-sm img-thumbnail" alt="...">
+                                 class="card-img" alt="...">
                         }
                     </div>
                     <div class="col-md-8">
@@ -34,6 +32,22 @@
                     </div>
                 </div>
             </div>
+        }
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3>Наша консультация</h3>
+            </div>
         </div>
-    </div>  
-}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Юридическая консультаяция Железнодорожного района г. Гомеля</h5>
+                <p class="card-text">ул. Пушкина, 10А</p>
+                <p class="card-text">Индекс: 2406050</p>
+                <p class="card-text">Телефон: 72-12-72</p>
+                <p class="card-text">Факс: </p>
+            </div>
+            <img src="~/img/house.jpg" class="card-img-top" alt="..." style=" height:500px">
+        </div>
+
+    </div>

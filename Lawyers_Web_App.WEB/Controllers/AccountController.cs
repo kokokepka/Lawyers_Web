@@ -63,9 +63,12 @@ namespace Lawyers_Web_App.WEB.Controllers
                         Password = model.Password,
                         DateOfBirth = model.DateOfBirth,
                         Email = model.Email,
-                        Phone = model.Phone
+                        Phone = model.Phone,
+                        HomePhone = model.HomePhone,
+                        Address = model.Address
+                        
                     });
-                    return View("RegistMessage", "Account");
+                    return RedirectToAction("AddUserMessage", "Account");
 
                 }
                 catch (ValidationException ex)
@@ -73,7 +76,7 @@ namespace Lawyers_Web_App.WEB.Controllers
                     ModelState.AddModelError(ex.Property, ex.Message);
                 }
             }
-            return View();
+            return PartialView();
         }
 
         [HttpGet]
@@ -275,7 +278,7 @@ namespace Lawyers_Web_App.WEB.Controllers
             {
                 System.IO.File.Delete(_webHostEnvironment.WebRootPath + path);
             }
-            _accountService.Delete(id);
+            _accountService.DeleteDoc(id);
             return RedirectToAction("MyDocuments", "Account");
         }
     }

@@ -46,7 +46,7 @@ namespace Lawyers_Web_App.BLL.Services.Other
         {
             Comment comment = _database.Comments.Get(id);
             if (comment == null)
-                throw new ValidationException("Кооментарий не найден", "");
+                throw new ValidationException("Коментарий не найден", "");
             var map = ObjectMapper.Mapper.Map<CommentDTO>(comment);
             return map;
         }

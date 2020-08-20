@@ -25,7 +25,8 @@ namespace Lawyers_Web_App.BLL.Interfaces.Cases
         IEnumerable<InstanceDTO> GetInstances(int kindCaseId);
         KindOfCaseDTO GetKind(int kind_id);
         KindOfCaseDTO FindKindByName(string kind_name);
-        void Delete(int userId);
+        void DeleteDoc(int Id);
+        void DeleteCase(int case_id);
         void Dispose();
     }
 }

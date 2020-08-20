@@ -8,7 +8,8 @@
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4">
-        <form asp-action="MakeNote">
+        <form asp-action="MakeNote" data-ajax="true" data-ajax-update="#main_information"
+                               data-ajax-mode="replace">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
@@ -17,7 +18,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
+                <input asp-for="Date" class="form-control" value="@DateTime.Now.ToString()"/>
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">

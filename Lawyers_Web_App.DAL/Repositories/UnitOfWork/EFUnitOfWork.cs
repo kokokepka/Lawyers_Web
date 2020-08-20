@@ -34,6 +34,8 @@ namespace Lawyers_Web_App.DAL.Repositories
         private QuestionRepository _questionRepository;
         private CommentRepository _commentRepository;
         private AnswerRepository _answerRepository;
+        private PriceRepository _priceRepository;
+        private ScheduleRepository _scheduleRepository;
 
 
         public EFUnitOfWork()
@@ -68,6 +70,10 @@ namespace Lawyers_Web_App.DAL.Repositories
         public IRepository<Comment> Comments => _commentRepository ?? new CommentRepository(db);
 
         public IRepository<Answer> Answers => _answerRepository ?? new AnswerRepository(db);
+
+        public IRepository<Price> Prices => _priceRepository ?? new PriceRepository(db);
+
+        public IRepository<Schedule> Schedules => _scheduleRepository ?? new ScheduleRepository(db);
 
         private bool disposed = false;
 

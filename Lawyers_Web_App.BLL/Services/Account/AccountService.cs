@@ -63,7 +63,8 @@ namespace Lawyers_Web_App.BLL.Services
                     DateOfBirth = userDTO.DateOfBirth,
                     Phone = userDTO.Phone,
                     HomePhone = userDTO.HomePhone,
-                    Email = userDTO.Email
+                    Email = userDTO.Email,
+                    Address = userDTO.Address
                 });
                 _database.Save();
             }
@@ -126,15 +127,24 @@ namespace Lawyers_Web_App.BLL.Services
             var mapped = ObjectMapper.Mapper.Map<UserDocDTO>(doc);
             return mapped;
         }
-        public void Delete(int userId)
+        public void DeleteDoc(int Id)
         {
-            UserDocument doc = _database.UserDocuments.Get(userId);
+            UserDocument doc = _database.UserDocuments.Get(Id);
             if (doc == null)
                 throw new ValidationException("Документ не найден", "");
             _database.UserDocuments.Delete(doc.Id);
             _database.Save();
         }
 
+
+        public void DeleteUser(int id)
+        {
+            User user = _database.Users.Get(id);
+            if (user == null)
+                throw new ValidationException("Пользователь не найден", "");
+            _database.Users.Delete(user.Id);
+            _database.Save();
+        }
         UserDTO IAccountService.GetUser(int id)
         {
             var user = _database.Users.Get(id);

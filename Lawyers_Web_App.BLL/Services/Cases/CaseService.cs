@@ -45,13 +45,6 @@ namespace Lawyers_Web_App.BLL.Services.Cases
             Instance instance = _database.Instances.Find(i => i.Id == caseDto.InstanceId).FirstOrDefault();
             if(instance == null)
                 throw new ValidationException(caseDto.Instance + "- не найден", "");
-            //Category category = null;
-            //if (caseDto.Category != null)
-            //{
-            //    category = _database.Categories.Find(c => c.Name == caseDto.Category).FirstOrDefault();
-            //    if(category == null)
-            //        throw new ValidationException(caseDto.Category + "- не найден", "");
-            //}
             User user = _database.Users.Get(caseDto.UserId);
             if (user == null)
                 throw new ValidationException("Пользователь не найден", "");
@@ -205,13 +198,6 @@ namespace Lawyers_Web_App.BLL.Services.Cases
 
         private CaseDTO CreateCaseDto(Case _case)
         {
-            //int? categoryId = null;
-            //string category = null;
-            //if (_case.Category != null)
-            //{
-            //    categoryId = _case.CategoryId;
-            //    category = _case.Category.Name;
-            //}
             return new CaseDTO
             {
                 Id = _case.Id,
@@ -225,8 +211,6 @@ namespace Lawyers_Web_App.BLL.Services.Cases
                 Date = _case.Date,
                 ArticleOrCategory = _case.ArticleOrCategory,
                 VerdictOrDecision = _case.VerdictOrDecision,
-                //CategoryId = categoryId,
-                //Category = category
             };
         }
 
@@ -301,9 +285,9 @@ namespace Lawyers_Web_App.BLL.Services.Cases
             return mapped;
         }
 
-        public void Delete(int userId)
+        public void DeleteDoc(int Id)
         {
-            CaseDocument doc = _database.ClientDocuments.Get(userId);
+            CaseDocument doc = _database.ClientDocuments.Get(Id);
             if (doc == null)
                 throw new ValidationException("Документ не найден", "");
             _database.ClientDocuments.Delete(doc.Id);
@@ -334,11 +318,6 @@ namespace Lawyers_Web_App.BLL.Services.Cases
             };
             if (_tmp_instance == null)
                 throw new ValidationException("инстанции не найдены", "");
-            //foreach(var item in _tmp_instance)
-            //{
-            //    var map = ObjectMapper.Mapper.Map<InstanceDTO>(item);
-            //    kind.Instances.Add(map);
-            //}
             var map = ObjectMapper.Mapper.Map<IEnumerable<InstanceDTO>>(_tmp_instance);
             kind.Instances = map;
             return kind;
@@ -351,6 +330,15 @@ namespace Lawyers_Web_App.BLL.Services.Cases
                 throw new ValidationException("Вид не найден", "");
             var map = ObjectMapper.Mapper.Map<KindOfCaseDTO>(kindOfCase);
             return map;
+        }
+
+        public void DeleteCase(int case_id)
+        {
+            Case _case = _database.Cases.Get(case_id);
+            if (_case == null)
+                throw new ValidationException("Дело не найдено", "");
+            _database.Cases.Delete(_case.Id);
+            _database.Save();
         }
     }
 }

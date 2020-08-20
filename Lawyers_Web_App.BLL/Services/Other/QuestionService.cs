@@ -80,5 +80,20 @@ namespace Lawyers_Web_App.BLL.Services.Other
             var map = ObjectMapper.Mapper.Map<IEnumerable<AnswerDTO>>(answers);
             return map;
         }
+
+        public AnswerDTO GetOneAnswer(int id)
+        {
+            Answer answer = _database.Answers.Get(id);
+            if (answer == null)
+                throw new ValidationException("Отвтет не найден", "");
+            var answer_dto = ObjectMapper.Mapper.Map<AnswerDTO>(answer);
+            return answer_dto;
+        }
+
+        public void DeleteAnswer(int id)
+        {
+            _database.Answers.Delete(id);
+            _database.Save();
+        }
     }
 }

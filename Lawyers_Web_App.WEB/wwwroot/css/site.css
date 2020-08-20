@@ -1,4 +1,23 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+﻿html {
+    position: relative;
+    height: 100%;
+    font-size: 14px;
+}
+
+body {
+/*     Margin bottom by footer height 
+    margin-bottom: 60px;
+    padding-top: 4.5rem;
+    margin-bottom: 4.5rem;*/
+    position: relative;
+    height: 100%;
+}
+header{
+    height: 10%;
+}
+
+
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
@@ -38,11 +57,7 @@ a {
     border-color: #1861ac;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-    font-size: 14px;
-}
+
 
 @media (min-width: 768px) {
     html {
@@ -66,20 +81,103 @@ button.accept-policy {
     font-size: 1rem;
     line-height: inherit;
 }
-
-/* Sticky footer styles
--------------------------------------------------- */
-/*html {
-    position: relative;
-    min-height: 100%;
-}*/
-
-body {
-    /* Margin bottom by footer height */
-    margin-bottom: 60px;
-    /*padding-top: 4.5rem;*/
-    margin-bottom: 4.5rem;
+.navbar{
+    position:relative;
+    height:100%;
 }
+
+#fon {
+    position: relative;
+    height: calc(100% - 10%);
+    width: 100%;
+}
+main {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+@keyframes animatedBackground {
+    0 {
+        background-position: 0 0
+    }
+
+    25% {
+        background-position: 1000px -1000px
+    }
+
+    50% {
+        background-position: -1000px 1000px
+    }
+
+    100% {
+        background-position: 0 0
+    }
+}
+/* Mozilla Firefox 5.0+ */
+@-moz-keyframes animatedBackground {
+    0 {
+        background-position: 0 0
+    }
+
+    25% {
+        background-position: 1000px -1000px
+    }
+
+    50% {
+        background-position: -1000px 1000px
+    }
+
+    100% {
+        background-position: 0 0
+    }
+}
+/* Safari 4.0+, Chrome 4.0+ */
+@-webkit-keyframes animatedBackground {
+    0 {
+        background-position: 0 0
+    }
+
+    25% {
+        background-position: 1000px -1000px
+    }
+
+    50% {
+        background-position: -1000px 1000px
+    }
+
+    100% {
+        background-position: 0 0
+    }
+}
+/* Opera 12.0+ */
+@-o-keyframes animatedBackground {
+    0 {
+        background-position: 0 0
+    }
+    25% {
+        background-position: 1000px -1000px
+    }
+    50% {
+        background-position: -1000px 1000px
+    }
+    100% {
+        background-position: 0 0
+    }
+}
+/* не нужно использовать префикс -ms, так как свойства keyframes и animation поддерживаются с версии IE10 без префикса */
+#index_fon {
+    position: relative;
+    height: 100%; /* задаем произвольную высоту и ширину блока */
+    width: 100%;
+    background-image: url('../img/1992.jpg');
+    animation: animatedBackground 180s linear infinite;
+    -moz-animation: animatedBackground 180s linear infinite;
+    -webkit-animation: animatedBackground 180s linear infinite;
+    -o-animation: animatedBackground 180s linear infinite;
+    /* так же, как и с @keyframes, префикс -ms тут ни к чему */
+}
+
 
 .footer {
     position: absolute;

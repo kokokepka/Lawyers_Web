@@ -37,6 +37,7 @@ else
                         <th>Инстанция</th>
                         <th>Дата</th>
                         <th>Информация</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,6 +59,21 @@ else
                                    data-ajax-mode="replace"
                                    data-ajax-method="get">
                                     Подробнее
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-danger"
+                                   asp-area="" asp-controller="Case"
+                                   asp-action="DeleteCase"
+                                   asp-route-user_id="@item.UserId"
+                                   asp-route-case_id="@item.Id"
+                                   asp-route-kind_case_="@item.KindOfCase"
+                                   method="get"
+                                   data-ajax="true"
+                                   data-ajax-update="#main_information"
+                                   data-ajax-mode="replace"
+                                   data-ajax-method="get">
+                                    Удалить
                                 </a>
                             </td>
                         </tr>

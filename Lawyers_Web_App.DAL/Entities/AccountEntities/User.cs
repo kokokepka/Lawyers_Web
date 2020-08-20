@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Lawyers_Web_App.DAL.Entities.Other;
 
 namespace Lawyers_Web_App.DAL.Entities.AccountEntities
 {
@@ -19,5 +20,7 @@ namespace Lawyers_Web_App.DAL.Entities.AccountEntities
         public virtual IList<UserDocument> Documents { get; set; }
         public virtual IList<Note> Notes { get; set; }
         public virtual IList<Case> Cases { get; set; }
+        public int? ScheduleId { get; set; }
+        public Schedule Schedule { get; set; }
     }
 }

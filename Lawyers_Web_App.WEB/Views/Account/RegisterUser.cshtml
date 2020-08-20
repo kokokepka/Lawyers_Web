@@ -9,7 +9,8 @@
 <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
-        <form asp-action="Register">
+        <form asp-action="RegisterUser"
+              method="post" data-ajax="true" data-ajax-update="#main_information" data-ajax-mode="replace">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Login" class="control-label"></label>
@@ -43,18 +44,28 @@
             </div>
             <div class="form-group">
                 <label asp-for="DateOfBirth" class="control-label"></label>
-                <input asp-for="DateOfBirth" class="form-control" />
+                <input asp-for="DateOfBirth" class="form-control" value="@DateTime.Now.Date.ToString()" />
                 <span asp-validation-for="DateOfBirth" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
+                <label asp-for="Phone" class="control-label"><small class="text-muted">XX XXX XX XX</small></label>
                 <input asp-for="Phone" class="form-control" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HomePhone" class="control-label"><small class="text-muted">XX XX XX</small></label>
+                <input asp-for="HomePhone" class="form-control" />
+                <span asp-validation-for="HomePhone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
             </div>
             <div class="row">
                 <div class="col-md-3">
@@ -73,7 +84,3 @@
     </div>
     <div class="col-md-3"></div>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

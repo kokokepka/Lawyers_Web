@@ -11,7 +11,7 @@
          id="add_doc_user">
         <a class="btn btn-primary" asp-controller="Account"
            asp-action="AddDocUser"
-           method="post"
+           method="get"
            data-ajax="true"
            data-ajax-update="#add_doc_user"
            data-ajax-mode="replace"
@@ -44,7 +44,8 @@ else
                     <td>
                         <a class="btn btn-danger" asp-area="" asp-controller="Account" asp-action="DeleteDocument"
                            asp-route-id="@item.Id"
-                           asp-route-path="@item.Path">Удалить</a>
+                           asp-route-path="@item.Path"
+                           ata-ajax="true" data-ajax-update="#main_information" data-ajax-mode="replace">Удалить</a>
                     </td>
                 </tr>
             }

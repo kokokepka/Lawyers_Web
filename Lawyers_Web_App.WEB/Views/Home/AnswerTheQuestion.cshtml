@@ -1,0 +1,22 @@
+﻿@model Lawyers_Web_App.WEB.Models.Other.AnswerModel
+
+<h4>AnswerModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="AnswerTheQuestion">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="QuestionId" class="form-control" type="hidden" value="@Model.QuestionId"/>
+            </div>
+            <div class="form-group">
+                <label asp-for="Text" class="control-label"></label>
+                <textarea asp-for="Text" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Отвтетить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

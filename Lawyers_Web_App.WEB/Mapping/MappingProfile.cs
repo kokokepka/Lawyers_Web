@@ -37,6 +37,7 @@ namespace Lawyers_Web_App.WEB.Mapping
             CreateMap<InstanceDTO, InstanceModel>();
             CreateMap<QuestionDTO, QuestionViewModel>();
             CreateMap<CommentDTO, CommentViewModel>();
+            CreateMap<AnswerDTO, AnswerModel>();
         }
     }
 }

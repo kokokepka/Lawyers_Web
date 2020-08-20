@@ -27,7 +27,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="DateOfBirth" class="control-label"></label>
-                <input asp-for="DateOfBirth" class="form-control" />
+                <input asp-for="DateOfBirth" class="form-control" value="@DateTime.Now.Date.ToString()" />
                 <span asp-validation-for="DateOfBirth" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -39,6 +39,11 @@
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HomePhone" class="control-label"><small class="text-muted">XX XX XX</small></label>
+                <input asp-for="HomePhone" class="form-control" />
+                <span asp-validation-for="HomePhone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Address" class="control-label"></label>
@@ -60,6 +65,9 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Добавить" class="btn btn-primary" />
+            </div>
+            <div class="form-group">
+                <input asp-for="Roles" class="form-control" type="hidden" value="@Model.Roles" />
             </div>
             <div>
                 <a class="btn btn-danger" asp-controller="Case" asp-action="AboutCase" asp-route-id="@Model.CaseId">Назад</a>

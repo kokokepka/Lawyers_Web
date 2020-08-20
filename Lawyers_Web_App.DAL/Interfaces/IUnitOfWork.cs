@@ -29,6 +29,8 @@ namespace Lawyers_Web_App.DAL.Interfaces
         IRepository<Question> Questions { get; }
         IRepository<Answer> Answers { get; }
         IRepository<Comment> Comments { get; }
+        IRepository<Price> Prices { get; }
+        IRepository<Schedule> Schedules { get; }
         void Save();
     }
 }
