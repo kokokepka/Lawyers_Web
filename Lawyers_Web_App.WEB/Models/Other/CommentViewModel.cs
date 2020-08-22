@@ -11,8 +11,8 @@ namespace Lawyers_Web_App.WEB.Models.Other
         public int Id { get; set; }
         [Display(Name= "Имя")]
         public string Name { get; set; }
-        [Required(ErrorMessage ="Введите ваш комментарий")]
-        [Display(Name = "Ваш комментарий")]
+        [Required(ErrorMessage ="Введите ваш отзыв")]
+        [Display(Name = "Ваш отзыв. Нам очень важно ваше мнение.")]
         public string Text { get; set; }
         public DateTime DateTime { get; set; }
     }

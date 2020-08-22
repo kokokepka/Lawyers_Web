@@ -49,7 +49,8 @@ namespace Lawyers_Web_App.BLL.Mappers
                 CreateMap<KindOfCase, KindOfCaseDTO>().ReverseMap();
                 CreateMap<Question, QuestionDTO>().ReverseMap();
                 CreateMap<Comment, CommentDTO>().ReverseMap();
-                CreateMap<Answer, AnswerDTO>().ReverseMap();              
+                CreateMap<Answer, AnswerDTO>().ReverseMap();
+                CreateMap<Price, PriceDTO>().ReverseMap();
             }
         }
     }

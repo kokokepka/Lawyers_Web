@@ -36,6 +36,7 @@ namespace Lawyers_Web_App.BLL.Infrastructure
             services.AddScoped<ICaseService, CaseService>();
             services.AddScoped<IQuestionService, QuestionService>();
             services.AddScoped<ICommentService<CommentDTO>, CommentService>();
+            services.AddScoped<IPriceService, PriceService>();
             services.AddScoped<IUnitOfWork, EFUnitOfWork>();
             return services;
         }

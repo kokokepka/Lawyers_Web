@@ -1,9 +1,7 @@
 ﻿@model Lawyers_Web_App.WEB.Models.Users.UserViewModel
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-info my_nav">
-        <a class="navbar-brand" asp-area="" asp-controller="Account" asp-action="PrivateOffice">
-            @Model.Surname @Model.Name @Model.Patronymic
-        </a>
+
+        @*</a>
         <button class="navbar-toggler"
                 type="button"
                 data-toggle="collapse"
@@ -16,81 +14,9 @@
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto sidenav bg-info" id="navAccordion">
-                <li class="nav-item">
-                    <a class="nav-link text-light my_link"
-                       id="hasSubItems"
-                       href="#"
-                       data-toggle="collapse"
-                       data-target="#collapseSubItems2"
-                       aria-controls="collapseSubItems2"
-                       aria-expanded="false">Мои дела</a>
-                    <ul class="nav-second-level collapse" id="collapseSubItems2" data-parent="#navAccordion">
-                        <li class="nav-item">
-                            <a class="nav-link text-light my_link" asp-area="" asp-controller="Case" asp-action="MyCases"
-                               asp-route-id="@Model.Id"
-                               asp-route-kind_case="Уголовное дело"
-                               method="get"
-                               data-ajax="true"
-                               data-ajax-update="#main_information"
-                               data-ajax-mode="replace"
-                               data-ajax-method="get">Уголовные</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light my_link" asp-area="" asp-controller="Case" asp-action="MyCases"
-                               asp-route-id="@Model.Id"
-                               asp-route-kind_case="Гражданское дело"
-                               method="get"
-                               data-ajax="true"
-                               data-ajax-update="#main_information"
-                               data-ajax-mode="replace"
-                               data-ajax-method="get">Гражданские</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light my_link" asp-area="" asp-controller="Case" asp-action="MyCases"
-                               asp-route-id="@Model.Id"
-                               asp-route-kind_case="Административное дело"
-                               method="get"
-                               data-ajax="true"
-                               data-ajax-update="#main_information"
-                               data-ajax-mode="replace"
-                               data-ajax-method="get">Административные</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light my_link" asp-area="" asp-controller="Account"
-                       asp-action="MyDocuments"
-                       method="get"
-                       data-ajax="true"
-                       data-ajax-update="#main_information"
-                       data-ajax-mode="replace"
-                       data-ajax-method="get">Мои документы</a>
-                </li>
-                @if (User.IsInRole("main-lawyer"))
-                {
-                    <li class="nav-item">
-                        <a class="nav-link text-light my_link" asp-area="" asp-controller="Account"
-                           asp-action="RegisterUser"
-                           method="get"
-                           data-ajax="true"
-                           data-ajax-update="#main_information"
-                           data-ajax-mode="replace"
-                           data-ajax-method="get">Новый адвокат</a>
-                    </li>
-                }
-                <li class="nav-item">
-                    <a class="nav-link text-light my_link" asp-area="" asp-controller="Other"
-                       asp-action="MyNotes"
-                       asp-route-userId="@Model.Id"
-                       method="get"
-                       data-ajax="true"
-                       data-ajax-update="#main_information"
-                       data-ajax-mode="replace"
-                       data-ajax-method="get">Заметки и события</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light my_link" href="#">Расписание</a>
-                </li>
+                
+                
+                
                 <li class="nav-item">
                     <a class="nav-link text-light my_link" href="#"></a>
                 </li>
@@ -104,42 +30,128 @@
                 </button>
             </form>
         </div>
-    </nav>
-<main class="content-wrapper">
-    <div class="container-fluid" id="main_information">
-        <div class="row">
-            <div class="col-md-12 offset-md-12">
-                <h2>@Model.Surname @Model.Name @Model.Patronymic</h2>
-            </div>
+    </nav>*@
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-lg-2 navbar-container bg-dark text-center">
+            <!-- Вертикальное меню -->
+            <nav class="navbar navbar-expand-md navbar-light">               
+                <div class="collapse navbar-collapse source_font" id="navbar">
+                    <!-- Пункты вертикального меню -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" style="font-size:x-large; font-family: 'Pattaya', sans-serif;"
+                               asp-area="" asp-controller="Account" asp-action="PrivateOffice">
+                                @Model.Surname <br />
+                                @Model.Name[0].@Model.Patronymic[0].
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light my_link" asp-area="" asp-controller="Case" asp-action="MyCases"
+                               asp-route-id="@Model.Id"
+                               asp-route-kind_case="Уголовное дело"
+                               method="get"
+                               data-ajax="true"
+                               data-ajax-update="#main_information"
+                               data-ajax-mode="replace"
+                               data-ajax-method="get">Уголовные дела</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light my_link" asp-area="" asp-controller="Case" asp-action="MyCases"
+                               asp-route-id="@Model.Id"
+                               asp-route-kind_case="Гражданское дело"
+                               method="get"
+                               data-ajax="true"
+                               data-ajax-update="#main_information"
+                               data-ajax-mode="replace"
+                               data-ajax-method="get">Гражданские дела</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light my_link" asp-area="" asp-controller="Case" asp-action="MyCases"
+                               asp-route-id="@Model.Id"
+                               asp-route-kind_case="Административное дело"
+                               method="get"
+                               data-ajax="true"
+                               data-ajax-update="#main_information"
+                               data-ajax-mode="replace"
+                               data-ajax-method="get">Административные дела</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light my_link" asp-area="" asp-controller="Account"
+                               asp-action="MyDocuments"
+                               method="get"
+                               data-ajax="true"
+                               data-ajax-update="#main_information"
+                               data-ajax-mode="replace"
+                               data-ajax-method="get">Мои документы</a>
+                        </li>
+                        @if (User.IsInRole("main-lawyer"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light my_link" asp-area="" asp-controller="Account"
+                                   asp-action="RegisterUser"
+                                   method="get"
+                                   data-ajax="true"
+                                   data-ajax-update="#main_information"
+                                   data-ajax-mode="replace"
+                                   data-ajax-method="get">Новый адвокат</a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-light my_link" asp-area="" asp-controller="Other"
+                               asp-action="MyNotes"
+                               asp-route-userId="@Model.Id"
+                               method="get"
+                               data-ajax="true"
+                               data-ajax-update="#main_information"
+                               data-ajax-mode="replace"
+                               data-ajax-method="get">Заметки и события</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light my_link" href="#">Расписание</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                @if (Model.Avatar == null || Model.Avatar.Length == 0)
-                {
-                    <img class="rounded-sm img-thumbnail" style='width:250px; height:350px;'
-                            src="~/img/users/photo.png" />
-                }
-                else
-                {
-                    <img class="rounded-sm img-thumbnail" style='width:250px; height:350px;'
-                            src="data:image/jpg;base64,@(Convert.ToBase64String(Model.Avatar))" />
-                }
-            </div>
-        </div>
-        <div class="row">
-            <div id="addphoto">
-                <div class="col-md-auto">
-                    <a class="btn btn-secondary" asp-area="" asp-controller="Account"
-                        asp-action="AddPhoto"
-                        asp-route-id="@Model.Id"
-                        method="get"
-                        data-ajax="true"
-                        data-ajax-update="#addphoto"
-                        data-ajax-mode="replace"
-                        data-ajax-method="get">Загрузить фото</a>
+        <div class="col-md-9 col-lg-10 content-container" style="background-color: white">
+            <div class="container-fluid" id="main_information">
+                <div class="row">
+                    <div class="col-md-12 offset-md-12">
+                        <h2>@Model.Surname @Model.Name @Model.Patronymic</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        @if (Model.Avatar == null || Model.Avatar.Length == 0)
+                        {
+                            <img class="rounded-sm img-thumbnail" style='width:250px; height:350px;'
+                                 src="~/img/users/photo.png" />
+                        }
+                        else
+                        {
+                            <img class="rounded-sm img-thumbnail" style='width:250px; height:350px;'
+                                 src="data:image/jpg;base64,@(Convert.ToBase64String(Model.Avatar))" />
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="addphoto">
+                        <div class="col-md-auto">
+                            <a class="btn btn-secondary" asp-area="" asp-controller="Account"
+                               asp-action="AddPhoto"
+                               asp-route-id="@Model.Id"
+                               method="get"
+                               data-ajax="true"
+                               data-ajax-update="#addphoto"
+                               data-ajax-mode="replace"
+                               data-ajax-method="get">Загрузить фото</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</main>
-
+</div>

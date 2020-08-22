@@ -12,7 +12,7 @@ namespace Lawyers_Web_App.WEB.Models.Other
         public int QuestionId { get; set; }
         [Required(ErrorMessage = "Задайте вопрос")]
         [MaxLength(200, ErrorMessage = "Длина не должна привышать 200 символов")]
-        [Display(Name = "Ответ. ( Максимальо лаконичный ).")]
+        [Display(Name = "Ответ. ( Максимальо лаконичный и понятный ).")]
         public string Text { get; set; }
         public DateTime DateTime { get; set; }
     }

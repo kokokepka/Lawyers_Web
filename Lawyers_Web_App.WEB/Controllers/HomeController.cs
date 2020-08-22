@@ -25,13 +25,16 @@ namespace Lawyers_Web_App.WEB.Controllers
         private readonly IAccountService _accountService;
         private readonly ICommentService<CommentDTO> _commentService;
         private readonly IQuestionService _questionService;
+        private readonly IPriceService _priceService;
         private readonly IMapper _mapper;
         public HomeController(ILogger<HomeController> logger, IAccountService accountService,
-            ICommentService<CommentDTO> commentService, IQuestionService questionService, IMapper mapper)
+            ICommentService<CommentDTO> commentService, IQuestionService questionService,
+            IPriceService priceService, IMapper mapper)
         {
             _accountService = accountService;
             _commentService = commentService;
             _questionService = questionService;
+            _priceService = priceService;
             _mapper = mapper;
             _logger = logger;
         }
@@ -81,26 +84,26 @@ namespace Lawyers_Web_App.WEB.Controllers
         [HttpPost]
         public IActionResult AskQuestion(QuestionViewModel model)
         {         
-            if (ModelState.IsValid)
+            try
             {
-                try
+                if (model.Text != null)
                 {
+                    string name = model.Name != null ? model.Name : "Гость";
                     QuestionDTO questionDTO = new QuestionDTO
                     {
-                        Name = model.Name,
+                        Name = name,
                         Text = model.Text
                     };
-                    _questionService.Add(questionDTO);
-                    return RedirectToAction("AllQuestions", "Home");
+                    _questionService.Add(questionDTO);                   
                 }
-                catch (ValidationException ex)
-                {
-                    ModelState.AddModelError(ex.Property, ex.Message);
-                }
-                return RedirectToAction("Index", "Home");
-               
+                return RedirectToAction("AllQuestions", "Home");
             }
-            return View(model);
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }
+            return RedirectToAction("Index", "Home");
+               
         }
 
         [HttpGet]
@@ -152,34 +155,29 @@ namespace Lawyers_Web_App.WEB.Controllers
         [HttpPost]
         public IActionResult AddComment(CommentViewModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
+                if (model.Text != null && model.Text.Length > 0)
                 {
-                    if (model.Text != null && model.Text.Length > 0)
+                    string name;
+                    if (model.Name == null || model.Name.Length <= 0)
+                        name = "Гость";
+                    else
+                        name = model.Name;
+                    _commentService.Add(new CommentDTO
                     {
-                        string name;
-                        if (model.Name == null || model.Name.Length <= 0)
-                            name = "Гость";
-                        else
-                            name = model.Name;
-                        _commentService.Add(new CommentDTO
-                        {
-                            Name = name,
-                            Text = model.Text,
-                            DateTime = DateTime.Now
-                        });
-                    }
-                    return RedirectToAction("AllComments", "Home");
+                        Name = name,
+                        Text = model.Text,
+                        DateTime = DateTime.Now
+                    });
                 }
-                catch (ValidationException ex)
-                {
-                    ModelState.AddModelError(ex.Property, ex.Message);
-                }
-                return RedirectToAction("Index", "Home");
-               
+                return RedirectToAction("AllComments", "Home");
             }
-            return PartialView(model);
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }
+            return RedirectToAction("Index", "Home");             
         }
 
         [HttpGet]
@@ -240,9 +238,9 @@ namespace Lawyers_Web_App.WEB.Controllers
         [HttpPost]
         public IActionResult AnswerTheQuestion(AnswerModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
+                if (model.Text != null && model.Text.Length < 200 && model.Text.Length > 1)
                 {
                     AnswerDTO answer = new AnswerDTO
                     {
@@ -250,14 +248,14 @@ namespace Lawyers_Web_App.WEB.Controllers
                         QuestionId = model.QuestionId
                     };
                     _questionService.AddAnswer(answer);
-                    return RedirectToAction("AllQuestions", "Home");
-                }
-                catch (ValidationException ex)
-                {
-                    ModelState.AddModelError(ex.Property, ex.Message);                    
-                }                    
+                }                               
+                return RedirectToAction("AllQuestions", "Home");
             }
-            return PartialView(model);
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);                    
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -275,6 +273,24 @@ namespace Lawyers_Web_App.WEB.Controllers
                 ModelState.AddModelError(ex.Property, ex.Message);
                 return RedirectToAction("Index", "Home");
             }          
+        }
+
+        [HttpGet]
+        public IActionResult KindLawyerHelp()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Price()
+        {
+            IEnumerable<PriceDTO> prices = _priceService.GetPrices();
+            if (prices != null)
+            {
+                var model = _mapper.Map<IEnumerable<PriceViewModel>>(prices);
+                return View(model);
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

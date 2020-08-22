@@ -243,6 +243,8 @@ namespace Lawyers_Web_App.DAL.EF
                 }
             };
 
+            modelBuilder.Entity<Price>().HasData(prices);
+
             User[] users = new User[]
             {
                 new User()

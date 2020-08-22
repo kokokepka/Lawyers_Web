@@ -2,87 +2,87 @@
 @{
     ViewData["Title"] = "Вопросы";
 }
-<div class="row justify-content-center">
-    <div class="col-md-auto">
-        <h4>Вопрос/Ответ</h4>
-    </div>
-</div>
-@if (Model.Count() != 0)
-{
-    @foreach (var item in Model)
-    {
-        <div class="row justify-content-center">
-            <div class="col-md-8  offset-md-2">
-                <div class="card w-75">
-                    <div class="card-body">
-                        <h5 class="card-header">Вопрос от @item.Name</h5>
-                        <p class="card-body">@item.Text</p>
-                        <p class="card-footer">@item.DateTime.ToString()</p>
-                        @if (User.Identity.IsAuthenticated && User.IsInRole("main-lawyer"))
-                        {
-                            <a asp-action="AnswerTheQuestion"
-                               asp-controller="Home" asp-route-id="@item.Id" 
-                               class="btn btn-primary"
-                               data-ajax="true"
-                               data-ajax-update="#addAnswer"
-                               data-ajax-mode="replace"
-                               data-ajax-method="get">Ответить</a>
-
-                            <a asp-action="DeleteQestion" asp-controller="Home" 
-                               asp-route-id="@item.Id" class="btn btn-danger">Удалить</a>
-                        }
-                    </div>
-                </div>
-            </div>
+    <div class="container pl-2 pr-2 pb-5 pt-3 mt-3 shadow-sm my_cont">
+        <div class="text-sm-center">
+            <h5 style="font-size:x-large; font-family: 'Pattaya', sans-serif;">
+                Задайте вопрос по юриспруденции и мы вам обязательно ответим
+            </h5>
         </div>
-        <div class="row">
-            <div class="col-md-6 offset-md-3" id="addAnswer">
-               
-            </div>
-        </div>
-        @if (item.Answers != null)
+        @if (Model.Count() != 0)
         {
-            foreach (var ans in item.Answers)
+            @foreach (var item in Model)
             {
-                <div class="row justify-content-center">
-                    <div class="col-md-8  offset-md-3">
-                        <div class="card w-75">
+                <div class="row justify-content-center mt-3 source_font">
+                    <div class="col-md-8">
+                        <div class="card w-75 rounded">
                             <div class="card-body">
-                                <h5 class="card-header">Ответ на вопрос @item.Name</h5>
-                                <p class="card-body">@ans.Text</p>
-                                <p class="card-footer">@ans.DateTime.ToString()</p>
-                                @if (User.Identity.IsAuthenticated && User.IsInRole("main-lawyer"))
+                                <h5 class="card-header">@item.Name задал(а) на вопрос</h5>
+                                <p class="card-body">@item.Text</p>
+                                <p class="card-footer">@item.DateTime.ToString()</p>
+                                @if (User.Identity.IsAuthenticated)
                                 {
-                                    <a asp-action="DeleteAnswer" asp-controller="Home" asp-route-id="@ans.Id" class="btn btn-danger">Удалить</a>
+                                    <a class="btn btn-dark" asp-action="AnswerTheQuestion" asp-controller="Home"
+                                       asp-route-id="@item.Id"
+                                       method="get"
+                                       data-ajax="true"
+                                       data-ajax-update="#addAnswer"
+                                       data-ajax-mode="replace"
+                                       data-ajax-method="get">Ответить</a>
+
+                                    <a asp-action="DeleteQestion" asp-controller="Home"
+                                       asp-route-id="@item.Id" class="btn btn-danger">Удалить</a>
                                 }
                             </div>
                         </div>
                     </div>
                 </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-6 offset-2" id="addAnswer">
+
+                    </div>
+                </div>
+                @if (item.Answers != null)
+                {
+                    foreach (var ans in item.Answers)
+                    {
+                        <div class="row justify-content-center">
+                            <div class="col-md-8  offset-2">
+                                <div class="card w-75 rounded">
+                                    <div class="card-body">
+                                        <p class="card-body">@ans.Text</p>
+                                        <p class="card-footer">@ans.DateTime.ToString()</p>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a asp-action="DeleteAnswer" asp-controller="Home" asp-route-id="@ans.Id" class="btn btn-danger">Удалить</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
             }
         }
-    }
-}
-else
-{
-    <div class="row justify-content-center">
-        <div class="col-md-auto">
-            <h4>Вопросов пока нет. Если вас что то интересует, то не стесняйтесь задать вопрос.</h4>
-        </div>
+        else
+        {
+            <div class="text-center source_font">
+                <h6>Вопросов пока нет. Если вас что то интересует, то не стесняйтесь задать вопрос.</h6>
+            </div>
+        }
+        <br />
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <div class="row justify-content-center source_font">
+                <div class="col-md-6 text-center" id="addQuastion">
+                    <a class="btn btn-light" asp-action="AskQuestion" asp-controller="Home"
+                       method="get"
+                       data-ajax="true"
+                       data-ajax-update="#addQuastion"
+                       data-ajax-mode="replace"
+                       data-ajax-method="get">Задать вопрос</a>
+                </div>
+            </div>
+        }
     </div>
-}
-<br />
-@if (!User.Identity.IsAuthenticated)
-{
-    <div class="row">
-        <div class="col-md-6 offset-md-3" id="addComment">
-            <a class="btn btn-primary" asp-action="AskQuestion" asp-controller="Home"
-               method="get"
-               data-ajax="true"
-               data-ajax-update="#addComment"
-               data-ajax-mode="replace"
-               data-ajax-method="get">Задать вопрос</a>
-        </div>
-    </div>
-}
-
+  

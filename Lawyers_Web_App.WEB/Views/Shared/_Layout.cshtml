@@ -6,21 +6,16 @@
     <title>@ViewData["Title"] - Гомельская городская коллегия адвокатов</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/office.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Pattaya&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/menu.css" />
+    @*<link href="https://fonts.googleapis.com/css2?family=Pattaya&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@700&display=swap" rel="stylesheet">*@
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant&family=Pattaya&family=Source+Serif+Pro&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        @*<div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-7">
-                <a class="navbar-brand font-weight-bold text-dark" style="font-size:x-large; font-family: 'Pattaya', sans-serif;" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/img/libra_black.png" class="d-inline-block align-content-center" alt="">
-                    Юридическая консультация Железнодорожного района г.Гомеля
-                </a>
-            </div>
-        </div>*@
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark box-shadow text-uppercase font-weight-bold">
+
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark box-shadow text-uppercase font-weight-bold" 
+             style="font-family: 'Cormorant Infant', serif; font-size:18px">
             <a class="navbar-brand text-light" href="#">
                 <img src="~/img/libra.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
                 Адвокаты
@@ -39,13 +34,11 @@
                         }
                         else
                         {
-
-                            <li class="nav-item">
-                                <a class="nav-link text-light my_link" asp-area="" asp-controller="Home" asp-action="Price">Прайс</a>
-                            </li>
-
                             <li class="nav-item">
                                 <a class="nav-link text-light my_link" asp-area="" asp-controller="Home" asp-action="KindLawyerHelp">Виды юрпомощи</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light my_link" asp-area="" asp-controller="Home" asp-action="Price">Прайс</a>
                             </li>
                         }
                         <li class="nav-item">

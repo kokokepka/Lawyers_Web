@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Lawyers_Web_App.WEB.Models.Other.PriceViewModel>
+@{
+    ViewData["Title"] = "Прайс";
+}
+
+<div class="container pl-2 pr-2 pb-5 pt-3 mt-3 shadow-sm my_cont">
+    <div class="text-sm-center">
+        <h5 style="font-size:x-large; font-family: 'Pattaya', sans-serif;">
+            Примерные размеры оплаты юридической помощи
+        </h5>
+    </div>
+       
+    <div style="font-family: 'Source Serif Pro', serif; font-size: 20px;">
+        <p>
+            Выписка из Методических рекомендаций по примерным размерам
+            оплаты юридической помощи, оказываемой адвокатами гражданам,
+            утв. Постановлением совета Белорусской республиканской  коллегии адвокатов № 03/06 от 02.07.2020 г.
+        </p>
+        <ul>
+            @foreach (var item in Model)
+            {
+                <li>@item.ForWhat <p style="font-weight:bold">От @item.StartSum - @item.FinishSum</p></li>                
+            }
+        </ul>
+    </div>       
+</div>
+
